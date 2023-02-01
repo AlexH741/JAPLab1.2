@@ -37,6 +37,5 @@ public class Lab {
 		frame.pack();
 		frame.setVisible(true);
 	}
-	//alex is here
 }
 
