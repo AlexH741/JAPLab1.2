@@ -23,7 +23,9 @@ public class Lab { //TODO: Javadoc
 		JPanel buttonPanel = new JPanel(new GridLayout(4,4,4,4));
 		JPanel textRightPanel = new JPanel();
 		JPanel textLeftPanel = new JPanel();
-		JPanel textTopPanel = new JPanel(); //TODO: add "Mark" button
+		JPanel textTopPanel = new JPanel();
+		JButton markButton = new JButton("Mark");
+		textTopPanel.add(markButton);
 		//TODO: add bottom pane?
 		
 		//TODO: add hint texts to panes
@@ -32,7 +34,7 @@ public class Lab { //TODO: Javadoc
 		JTextArea textArea1 = new JTextArea(":)", 30, 10); //TODO: Change all text areas to JTextPanes or JEditorPanes
 		textRightPanel.add(textArea1);
 
-		JTextArea textArea2 = new JTextArea(":)", 30, 10);
+		JTextArea textArea2 = new JTextArea(":)", 30, 10);//
 		textLeftPanel.add(textArea2);
 
 		JTextArea textArea3 = new JTextArea(":)", 7, 30);
@@ -42,6 +44,13 @@ public class Lab { //TODO: Javadoc
 
 		for (int i = 0; i < 16; i++) {
 			areaButtons[i] = new JButton(); //TODO: Add event listeners
+			buttonPanel.add(areaButtons[i]); //TODO: Recolor/reskin buttons
+			areaButtons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Handle button click 
+                }
+            });
 			buttonPanel.add(areaButtons[i]); //TODO: Recolor/reskin buttons
 		}
 
