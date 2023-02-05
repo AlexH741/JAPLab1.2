@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,12 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.*;
 
 public class UI extends JFrame{
-    public JTextArea Area1 = new JTextArea(":)", 30, 10);
+    private JTextArea Area1 = new JTextArea(":)", 30, 10);
 
     public UI() {
         JFrame frame = new JFrame("Picross");
 	    frame.setBackground(Color.white);
-	    frame.setMinimumSize(new Dimension(800,800));
+	    frame.setMinimumSize(new Dimension(900,800));
 	    frame.setResizable(false);
 	    //frame.setResizable(isDefaultLookAndFeelDecorated());
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,18 +52,53 @@ public class UI extends JFrame{
     }
 
     private JPanel createRightPanel(JPanel right) {
-        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-        JLabel timerLabel = new JLabel("Timer: 0");
-        JLabel pointsLabel = new JLabel("Points: 0");
+        right.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        JLabel timerLabel = new JLabel("Timer: ");
+        JTextField TimerBox = new JTextField("00:00");
+        TimerBox.setEditable(false);
+
+        JLabel pointsLabel = new JLabel("Points: ");
+        JTextField PointsBox = new JTextField("0");
+        PointsBox.setEditable(false);
+
         JButton resetButton = new JButton("Reset");
+
 
 		JScrollPane textArea1 = new JScrollPane(Area1);  
 		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        right.add(timerLabel);
-		right.add(textArea1);
-        right.add(pointsLabel);
-        right.add(resetButton);
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        right.add(timerLabel, c);
+
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        right.add(TimerBox, c);
+
+        c.weightx = 0;
+		right.add(textArea1, c);
+
+        c.fill = GridBagConstraints.RELATIVE;;
+        c.gridy = 2;
+        right.add(pointsLabel, c);
+
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.gridx = 1;
+        //c.fill = GridBagConstraints.HORIZONTAL;
+        //c.weightx = 0;
+        //.gridx = GridBagConstraints.RELATIVE;
+        //c.gridy = 2;
+        //c.gridwidth = GridBagConstraints.REMAINDER;
+        //c.gridwidth = GridBagConstraints.RELATIVE;
+        right.add(PointsBox, c);
+
+        //c.fill = GridBagConstraints.HORIZONTAL;
+        //c.weightx = 0.5;
+        //c.gridx = 0;
+        //c.gridy = 3;
+        //right.add(resetButton, c);
 
         return right;
     }
@@ -100,6 +136,7 @@ public class UI extends JFrame{
 			for (int j = 0; j < 4; j++) {
 				final int final_j = j;
 				areaButtons[i][j] = new JButton();
+                areaButtons[i][j].setBackground(new Color(0x7CCD7C));
 
 				areaButtons[i][j].addActionListener(new ActionListener() {
 					@Override
