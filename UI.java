@@ -1,3 +1,13 @@
+/**
+ * Rough draft of Picross game UI
+ * 
+ * CET - CS Academic Level 4
+ * Student Names: Bich Khe Hoang, Alex Holmes
+ * Student Numbers: 040990843 , 041026437
+ * Section 302
+ * Course: CST8221 - Java Application Programming
+ * Lab Professor: Daniel Cormier
+ */
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,10 +26,21 @@ import javax.swing.JPanel;
 
 import javax.swing.*;
 
-public class UI extends JFrame{
+ /**
+ * Class that creates a user interface with different components like text areas, buttons, panels, etc.
+ */
+public class UI extends JFrame implements ActionListener{
+    /**
+     * Text area that displays information.
+     */
     private JTextArea Area1 = new JTextArea(30, 10);
     private JButton[][] areaButtons = new JButton[4][4];
+    private JCheckBox markButton = new JCheckBox();
+    private Boolean[][] selectedButton = new Boolean[4][4];
 
+    /**
+     * Constructor that creates and initializes the frame.
+     */
     public UI() {
         JFrame frame = new JFrame("Picross");
 	    frame.setBackground(Color.white);
@@ -36,10 +57,16 @@ public class UI extends JFrame{
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
         frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel));
         frame.add(BorderLayout.CENTER, createButtons(buttonPanel));
+        //frame.add(new JLabel(new ImageIcon("PICROSS1.png")));
         frame.pack();
 		frame.setVisible(true);
     }
 
+    /**
+     * Creates and returns the left panel of the frame.
+     * @param left JPanel object to be initialized as the left panel.
+     * @return JPanel object that represents the left panel.
+     */
     private JPanel createLeftPanel(JPanel left) {
         String text = "\n\n\n\n\t (1,1) \n\n\n\n\n\n\n\n\n\n\t (2,2) \n\n\n\n\n\n\n\n\n\n\n\t (3, 3) \n\n\n\n\n\n\n\n\n\n\t (4,4)";
         JTextArea Area2 = new JTextArea(text , 40, 10);
@@ -49,6 +76,11 @@ public class UI extends JFrame{
         return left;
     }
 
+    /**
+    * Creates the right panel of the application.
+    * @param right JPanel to be created.
+    * @return The created JPanel with components: a timer label, a text area with a scrollbar, a points label, and a reset button.
+    */
     private JPanel createRightPanel(JPanel right) {
         right.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -74,9 +106,12 @@ public class UI extends JFrame{
 		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Area1.setEditable(false);
 
-
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
+        c.gridwidth = GridBagConstraints.REMAINDER;        
+        right.add(new JLabel(new ImageIcon("PICROSS1.png")), c);
+
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.weightx = 0.0;
         right.add(timerLabel, c);
 
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -86,24 +121,31 @@ public class UI extends JFrame{
 		right.add(textArea1, c);
 
         c.fill = GridBagConstraints.RELATIVE;
-        c.gridy = 2;
+        c.gridy = 3;
         right.add(pointsLabel, c);
 
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridx = 1;
+        c.gridx = 2;
         right.add(PointsBox, c);
 
-        c.gridy = 3;
+        c.gridy = 4;
         right.add(resetButton, c);
 
         return right;
     }
 
+    /**
+    * Creates the top panel of the application.
+    * 
+    * @param top JPanel to be created.
+    * @return The created JPanel with components: a checkbox, a dropdown menu, a text area, and an array of labels.
+    */
     private JPanel createTopPanel(JPanel top) {
         String[] Languages = {"French" , "English", "Vietnamese"};
-        String text = "\n\n\n\n\n\n\n                        (1,1)\t\t          (2,2)\t\t               (3,3)                                          (4,4)";
+        String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
 
-        JCheckBox markButton = new JCheckBox("Mark");
+        markButton = new JCheckBox("Mark");
+        markButton.addActionListener(this);
 
         JComboBox<Object> LanguageBox = new JComboBox<Object>(Languages);
 		LanguageBox.addActionListener(LanguageBox);
@@ -119,9 +161,13 @@ public class UI extends JFrame{
         return top;
     }
 
+    /**
+    * Creates the buttons in the application.
+    * 
+    * @param buttons JPanel to be created.
+    * @return The created JPanel with an array of buttons and their corresponding mark buttons. Each button adds a text to the text area when pressed.
+    */
     private JPanel createButtons(JPanel buttons) {
-		//Boolean[][] markButtons = new Boolean[4][4];
-
 		for (int i = 0; i < 4; i++) {
 			final int final_i = i;
 			for (int j = 0; j < 4; j++) {
@@ -132,16 +178,27 @@ public class UI extends JFrame{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						Area1.setText(Area1.getText() + "\n Pos " + (final_i + 1) + ", " + (final_j + 1));
+                        selectedButton[final_i][final_j] = true;
 					}
 				});
 
-				buttons.add(areaButtons[i][j]); //TODO: Recolor/reskin buttons
+				buttons.add(areaButtons[i][j]);
 			}
 		}
         return buttons;
     }
 
+    /**
+    * determines the recaction of an action event
+    * 
+    * @param e An action event.
+    */
     public void actionPerformed(ActionEvent e) {
-
+        JCheckBox c = (JCheckBox) e.getSource();
+        if (c.isSelected()) {
+            Area1.setText(Area1.getText() + "\n Mark");
+        } else {
+            Area1.setText(Area1.getText() + "\n Unmark");
+        }
     }
 }
