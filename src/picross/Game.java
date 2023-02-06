@@ -1,3 +1,4 @@
+package src.picross;
 /**
  * Rough draft of Picross game UI
  * 
