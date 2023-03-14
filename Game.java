@@ -12,6 +12,9 @@
 public class Game{ //TODO: Javadoc
 
 	public static void main(String[] args) {
-		UI newUI = new UI();
+		Model gameModel = new Model();
+		View gameView = new View();
+		Controller gameController = new Controller(gameModel, gameView);
+		//UI newUI = new UI();
 	}
 }

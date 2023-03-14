@@ -1,3 +1,8 @@
+/*
+ * TODO This class should used to create the splash screen, Initialize the game(creating the components),
+ * Refresh/clean components during execution, Show menu dialogs(ex: "About" or "Color Chooser"), interact
+ * with the player when they are playing the game (updating colors, points, etc.) 
+*/
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,16 +18,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 import javax.swing.*;
 
-public class UI extends JFrame{
-    private JTextArea Area1 = new JTextArea(30, 10);
-    private JButton[][] areaButtons = new JButton[5][5];
-    private JCheckBox markButton = new JCheckBox();
-    private Boolean[][] selectedButton = new Boolean[5][5];
+public class View extends JFrame{
+        /* 
+        private JTextArea Area1 = new JTextArea(30, 10);
+        private JButton[][] areaButtons = new JButton[5][5];
+        private JCheckBox markButton = new JCheckBox();
+        private Boolean[][] selectedButton = new Boolean[5][5];
+        */
+        
+        public JTextArea Area1 = new JTextArea(30, 10);
+        public JButton[][] areaButtons = new JButton[5][5];
+        public JCheckBox markButton = new JCheckBox();
+        public Boolean[][] selectedButton = new Boolean[5][5];
 
-    public UI() {
+    View() {
         JFrame frame = new JFrame("Picross");
 	    frame.setBackground(Color.white);
 	    frame.setMinimumSize(new Dimension(900,800));
@@ -53,7 +64,7 @@ public class UI extends JFrame{
         frame.pack();
 		frame.setVisible(true);
     }
-
+    
     private JPanel createLeftPanel(JPanel left) {
         left.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -291,5 +302,4 @@ public class UI extends JFrame{
         //gbc.weighty = 1.0;
         return gbc;
      }
-  
 }
