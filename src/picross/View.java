@@ -29,10 +29,22 @@ public class View extends JFrame{
         private Boolean[][] selectedButton = new Boolean[5][5];
         */
         
-        public JTextArea Area1 = new JTextArea(30, 10);
-        public JButton[][] areaButtons = new JButton[5][5];
-        public JCheckBox markButton = new JCheckBox();
-        public Boolean[][] selectedButton = new Boolean[5][5];
+        private JTextArea Area1 = new JTextArea(30, 10);
+        private JButton[][] areaButtons = new JButton[5][5];
+        private JCheckBox markButton = new JCheckBox();
+        //private Boolean[][] selectedButton = new Boolean[5][5];
+        private JButton resetButton;
+        private JTextField TimerBox, PointsBox;
+        private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
+        private JComboBox<Object> LanguageBox;
+        public int test = 100;
+        
+        public ActionListener actionResetListener;
+        
+        //public ActionListener actionResetListener = new Controller(resetButton);
+
+        //private ActionListener actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5);
+        
 
     View() {
         JFrame frame = new JFrame("Picross");
@@ -45,8 +57,6 @@ public class View extends JFrame{
 		JPanel textRightPanel = new JPanel();
 		JPanel textLeftPanel = new JPanel();
 		JPanel textTopPanel = new JPanel();
-
-
         /* 
         JOptionPane.showMessageDialog(frame, "image here", "", JOptionPane.PLAIN_MESSAGE);
         try { //TODO modify try/catch
@@ -71,24 +81,24 @@ public class View extends JFrame{
         GridBagConstraints c = new GridBagConstraints();
         //String text = "\n\n\n\n\t (1,1) \n\n\n\n\n\n\n\n\n\n\t (2,2) \n\n\n\n\n\n\n\n\n\n\n\t (3, 3) \n\n\n\n\n\n\n\n\n\n\t (4,4)";
         //JTextArea Area2 = new JTextArea(text , 40, 10);
-        JLabel Area1 = new JLabel("(1,1)");
-        JLabel Area2 = new JLabel("(1,2)");
-        JLabel Area3 = new JLabel("(1,3)");
-        JLabel Area4 = new JLabel("(1,4)");
-        JLabel Area5 = new JLabel("(1,5)");
+        AreaL1 = new JLabel("(1,1)");
+        AreaL2 = new JLabel("(1,2)");
+        AreaL3 = new JLabel("(1,3)");
+        AreaL4 = new JLabel("(1,4)");
+        AreaL5 = new JLabel("(1,5)");
         //Area2.setEditable(false); 
         c.fill = GridBagConstraints.RELATIVE;
         c.ipadx = 50;
         c.ipady = 125; 
-		left.add(Area1, c);
+		left.add(AreaL1, c);
         c.gridy = 1;
-        left.add(Area2, c);
+        left.add(AreaL2, c);
         c.gridy = 2;
-        left.add(Area3, c);
+        left.add(AreaL3, c);
         c.gridy = 3;
-        left.add(Area4, c);
+        left.add(AreaL4, c);
         c.gridy = 4;
-        left.add(Area5, c);
+        left.add(AreaL5, c);
 
         return left;
     }
@@ -98,21 +108,30 @@ public class View extends JFrame{
         GridBagConstraints c = new GridBagConstraints();
 
         JLabel timerLabel = new JLabel("Timer: ");
-        JTextField TimerBox = new JTextField("00:00");
+        TimerBox = new JTextField("00:00");
         TimerBox.setEditable(false);
 
         JLabel pointsLabel = new JLabel("Points: ");
-        JTextField PointsBox = new JTextField("0");
+        PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
 
-        JButton resetButton = new JButton("Reset");
+        //JButton resetButton = new JButton("Reset");
+        //ActionListener listener = new Controller();
+        resetButton = new JButton("Reset");
+        //ActionListener actionResetListener = new Controller(resetButton);
+        actionResetListener = new Controller(resetButton);
+        resetButton.addActionListener(actionResetListener);
+        //resetButton.addActionListener(this);
+        /* 
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Area1.setText(Area1.getText() + "\n Reset game");
             }
         });
-
+        */
+        
+        
 
 		JScrollPane textArea1 = new JScrollPane(Area1);  
 		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -121,7 +140,7 @@ public class View extends JFrame{
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;        
         //right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
-        right.add(new JLabel(new ImageIcon("PICROSS1.png")), c);
+        right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
 
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.weightx = 1.0;
@@ -157,17 +176,17 @@ public class View extends JFrame{
         markButton = new JCheckBox("Mark");
         //markButton.addActionListener((ActionListener) this);
 
-        JComboBox<Object> LanguageBox = new JComboBox<Object>(Languages);
-		LanguageBox.addActionListener(LanguageBox);
+        LanguageBox = new JComboBox<Object>(Languages);
+		//LanguageBox.addActionListener(LanguageBox);
 		LanguageBox.setSelectedIndex(1);
 
         //JTextArea textArea3 = new JTextArea(text, 7, 70);
         //textArea3.setEditable(false);
-        JLabel Area1 = new JLabel("(1,1)");
-        JLabel Area2 = new JLabel("(1,2)");
-        JLabel Area3 = new JLabel("(1,3)");
-        JLabel Area4 = new JLabel("(1,4)");
-        JLabel Area5 = new JLabel("(1,5)");
+        AreaT1 = new JLabel("(1,1)");
+        AreaT2 = new JLabel("(1,2)");
+        AreaT3 = new JLabel("(1,3)");
+        AreaT4 = new JLabel("(1,4)");
+        AreaT5 = new JLabel("(1,5)");
         
         ///* 
 		//c.fill = GridBagConstraints.RELATIVE;
@@ -182,20 +201,20 @@ public class View extends JFrame{
 		top.add(markButton, t);
         t = createGbc(1, 0);
         t.weightx = var;
-        top.add(Area1, t);
+        top.add(AreaT1, t);
         //t.ipadx = 0;
         t = createGbc(2, 0);
         t.weightx = var;
-        top.add(Area2, t);
+        top.add(AreaT2, t);
         t = createGbc(3, 0);
         t.weightx = var;
-        top.add(Area3, t);
+        top.add(AreaT3, t);
         t = createGbc(4, 0);
         t.weightx = var;
-        top.add(Area4, t);
+        top.add(AreaT4, t);
         t = createGbc(5, 0);
         t.weightx = var;
-        top.add(Area5, t);
+        top.add(AreaT5, t);
         /* 
         top.add(markButton, createGbc(0, 0));
         top.add(Area1, createGbc(1, 0));
@@ -225,20 +244,22 @@ public class View extends JFrame{
     }
 
     private JPanel createButtons(JPanel buttons) {
-		//Boolean[][] markButtons = new Boolean[4][4];
 		for (int i = 0; i < 5; i++) {
 			final int final_i = i;
 			for (int j = 0; j < 5; j++) {
 				final int final_j = j;
 				areaButtons[i][j] = new JButton();
                 areaButtons[i][j].setBackground(new Color(0x7CCD7C));
+                //areaButtons[i][j].addActionListener(this);
+                /* 
 				areaButtons[i][j].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Area1.setText(Area1.getText() + "\n Pos " + (final_i + 1) + ", " + (final_j + 1));
+						//Area1.setText(Area1.getText() + "\n Pos " + (final_i + 1) + ", " + (final_j + 1));
                         selectedButton[final_i][final_j] = true;
 					}
 				});
+                */
 
 				buttons.add(areaButtons[i][j]);
 			}
@@ -298,5 +319,16 @@ public class View extends JFrame{
         //gbc.weightx = (x == 0) ? 0.1 : 1.0;
         //gbc.weighty = 1.0;
         return gbc;
-     }
+    }
+
+    public void createLogTextNNL(String text) {
+        Area1.setText(Area1.getText() + text );
+    }
+    public void createLogTextNL(String text) {
+        Area1.setText(Area1.getText() + "\n" + text);
+        System.out.println("New Line");
+    }
+    public void createLogText(String text) {
+        Area1.setText(Area1.getText() + "\n" + text);
+    }
 }
