@@ -1,7 +1,11 @@
 .vscode/settings.json
+<<<<<<< HEAD
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json
 .vs/JAPLab1.2/FileContentIndex/815be832-9cd5-4ca1-b6bc-a8af6cd6a7cf.vsidx
 .vs/JAPLab1.2/FileContentIndex/read.lock
 .vs/JAPLab1.2/v17/.wsuo
+=======
+build-jar/Picross.jar
+>>>>>>> 08107d3c636590607de36b4024303bbf53d1e4ca
