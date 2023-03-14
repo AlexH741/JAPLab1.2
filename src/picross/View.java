@@ -268,10 +268,6 @@ public class View extends JFrame{
         return menuBar;
     }
 
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
     private GridBagConstraints createGbc(int x, int y) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
