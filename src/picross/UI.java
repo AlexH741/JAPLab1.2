@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 
 import javax.swing.*;
 
+//TODO MAKE SURE THAT ASSIGNMENT 2.2 MIRRORS WHAT WAS DEFINED IN ASSIGNMENT 2.1
+
  /**
  * Class that creates a user interface with different components like text areas, buttons, panels, etc.
  */
@@ -35,7 +37,7 @@ public class UI extends JFrame implements ActionListener{
      * Text area that displays information.
      */
     private JTextArea Area1 = new JTextArea(30, 10);
-    private JButton[][] areaButtons = new JButton[4][4];
+    private JButton[][] areaButtons = new JButton[5][5];
     private JCheckBox markButton = new JCheckBox();
     private Boolean[][] selectedButton = new Boolean[4][4];
 
@@ -49,7 +51,7 @@ public class UI extends JFrame implements ActionListener{
 	    frame.setResizable(false);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(4,4,4,4));
+        JPanel buttonPanel = new JPanel(new GridLayout(5,5,5,5));
 		JPanel textRightPanel = new JPanel();
 		JPanel textLeftPanel = new JPanel();
 		JPanel textTopPanel = new JPanel();
@@ -69,10 +71,28 @@ public class UI extends JFrame implements ActionListener{
      * @return JPanel object that represents the left panel.
      */
     private JPanel createLeftPanel(JPanel left) {
-        String text = "\n\n\n\n\t (1,1) \n\n\n\n\n\n\n\n\n\n\t (2,2) \n\n\n\n\n\n\n\n\n\n\n\t (3, 3) \n\n\n\n\n\n\n\n\n\n\t (4,4)";
-        JTextArea Area2 = new JTextArea(text , 40, 10);
-        Area2.setEditable(false);  
-		left.add(Area2);
+        left.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        //String text = "\n\n\n\n\t (1,1) \n\n\n\n\n\n\n\n\n\n\t (2,2) \n\n\n\n\n\n\n\n\n\n\n\t (3, 3) \n\n\n\n\n\n\n\n\n\n\t (4,4)";
+        //JTextArea Area2 = new JTextArea(text , 40, 10);
+        JLabel Area1 = new JLabel("(1,1)");
+        JLabel Area2 = new JLabel("(1,2)");
+        JLabel Area3 = new JLabel("(1,3)");
+        JLabel Area4 = new JLabel("(1,4)");
+        JLabel Area5 = new JLabel("(1,5)");
+        //Area2.setEditable(false); 
+        c.fill = GridBagConstraints.RELATIVE;
+        c.ipadx = 50;
+        c.ipady = 125; 
+		left.add(Area1, c);
+        c.gridy = 1;
+        left.add(Area2, c);
+        c.gridy = 2;
+        left.add(Area3, c);
+        c.gridy = 3;
+        left.add(Area4, c);
+        c.gridy = 4;
+        left.add(Area5, c);
 
         return left;
     }
@@ -109,10 +129,10 @@ public class UI extends JFrame implements ActionListener{
 
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;        
-        right.add(new JLabel(new ImageIcon("PICROSS1.png")), c);
+        right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
 
         c.gridwidth = GridBagConstraints.RELATIVE;
-        c.weightx = 0.0;
+        c.weightx = 1.0;
         right.add(timerLabel, c);
 
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -142,8 +162,10 @@ public class UI extends JFrame implements ActionListener{
     * @return The created JPanel with components: a checkbox, a dropdown menu, a text area, and an array of labels.
     */
     private JPanel createTopPanel(JPanel top) {
+        top.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         String[] Languages = {"French" , "English", "Vietnamese"};
-        String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
+        //String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
 
         markButton = new JCheckBox("Mark");
         markButton.addActionListener(this);
@@ -152,12 +174,32 @@ public class UI extends JFrame implements ActionListener{
 		LanguageBox.addActionListener(LanguageBox);
 		LanguageBox.setSelectedIndex(1);
 
-        JTextArea textArea3 = new JTextArea(text, 7, 70);
-        textArea3.setEditable(false);
+        //JTextArea textArea3 = new JTextArea(text, 7, 70);
+        //textArea3.setEditable(false);
+        JLabel Area1 = new JLabel("(1,1)");
+        JLabel Area2 = new JLabel("(1,2)");
+        JLabel Area3 = new JLabel("(1,3)");
+        JLabel Area4 = new JLabel("(1,4)");
+        JLabel Area5 = new JLabel("(1,5)");
         
-		top.add(markButton);
-        top.add(textArea3);
-        top.add(LanguageBox);
+		c.fill = GridBagConstraints.RELATIVE;
+        c.ipadx = 50;
+        c.ipady = 50; 
+		top.add(markButton, c);
+        c.ipadx = 0;
+        c.gridx = 1;
+        top.add(Area1, c);
+        c.gridx = 2;
+        top.add(Area2, c);
+        c.gridx = 3;
+        top.add(Area3, c);
+        c.gridx = 5;
+        top.add(Area4, c);
+        c.gridx = 6;
+        top.add(Area5, c);
+        c.gridx = 7;
+        //top.add(textArea3);
+        top.add(LanguageBox, c);
 
         return top;
     }
