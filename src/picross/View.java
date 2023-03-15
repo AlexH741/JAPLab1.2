@@ -30,7 +30,7 @@ public class View extends JFrame{
         */
         
         private JTextArea Area1 = new JTextArea(30, 10);
-        private JButton[][] areaButtons = new JButton[5][5];
+        JButton[][] areaButtons = new JButton[5][5];
         private JCheckBox markButton = new JCheckBox();
         //private Boolean[][] selectedButton = new Boolean[5][5];
         private JButton resetButton;
@@ -40,10 +40,12 @@ public class View extends JFrame{
         public int test = 100;
         
         public ActionListener actionResetListener;
+        public ActionListener actionMarkListener;
+        public ActionListener actionButtonsListener;
         
         //public ActionListener actionResetListener = new Controller(resetButton);
 
-        //private ActionListener actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5);
+        //private ActionListener actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5, this);
         
 
     View() {
@@ -57,6 +59,7 @@ public class View extends JFrame{
 		JPanel textRightPanel = new JPanel();
 		JPanel textLeftPanel = new JPanel();
 		JPanel textTopPanel = new JPanel();
+        //actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5, this);
         /* 
         JOptionPane.showMessageDialog(frame, "image here", "", JOptionPane.PLAIN_MESSAGE);
         try { //TODO modify try/catch
@@ -119,8 +122,10 @@ public class View extends JFrame{
         //ActionListener listener = new Controller();
         resetButton = new JButton("Reset");
         //ActionListener actionResetListener = new Controller(resetButton);
-        actionResetListener = new Controller(resetButton);
-        resetButton.addActionListener(actionResetListener);
+        //actionResetListener = new Controller(resetButton, this);
+        //actionResetListener = new ActionController(resetButton);
+        //resetButton.setActionCommand("resetButton");
+        //resetButton.addActionListener(actionResetListener);
         //resetButton.addActionListener(this);
         /* 
         resetButton.addActionListener(new ActionListener() {
@@ -174,6 +179,9 @@ public class View extends JFrame{
         //String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
 
         markButton = new JCheckBox("Mark");
+        //actionMarkListener = new Controller(markButton, this);
+        //actionResetListener = new ActionController(resetButton);
+        markButton.addActionListener(actionMarkListener);
         //markButton.addActionListener((ActionListener) this);
 
         LanguageBox = new JComboBox<Object>(Languages);
@@ -250,6 +258,11 @@ public class View extends JFrame{
 				final int final_j = j;
 				areaButtons[i][j] = new JButton();
                 areaButtons[i][j].setBackground(new Color(0x7CCD7C));
+                //actionButtonsListener = new Controller(areaButtons[i][j], i, j, this);
+                //actionButtonsListener = new Controller(areaButtons, areaButtons[i][j], i, j, this);
+                
+                //actionResetListener = new ActionController(resetButton);
+                //areaButtons[i][j].addActionListener(actionButtonsListener);
                 //areaButtons[i][j].addActionListener(this);
                 /* 
 				areaButtons[i][j].addActionListener(new ActionListener() {
@@ -330,5 +343,15 @@ public class View extends JFrame{
     }
     public void createLogText(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
+    }
+
+    public void addActionListeners(ActionListener r, ActionListener m, ActionListener b) {
+        resetButton.addActionListener(r);
+        markButton.addActionListener(m);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                areaButtons[i][j].addActionListener(b);
+            }
+        }
     }
 }

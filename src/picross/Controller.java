@@ -9,19 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Controller implements ActionListener{
+public class Controller /*implements ActionListener*/{
     private Model model;
     private View view;
 
-    private JButton[][] areaButtons;
+    private JButton[][] areaButtons = new JButton[5][5];
+    private JButton areaButton;
     private JCheckBox markButton;
     //private Boolean[][] selectedButton = new Boolean[5][5];
     private JButton resetButton;
     private JTextField TimerBox, PointsBox;
     private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
     private JComboBox<Object> LanguageBox;
-    /*
-    Controller(JButton resetButton, JButton[][] areaButtons, JCheckBox markButton, JTextField TimerBox, JTextField PointsBox, JComboBox<Object> LanguageBox, JLabel AreaL1, JLabel AreaL2, JLabel AreaL3, JLabel AreaL4, JLabel AreaL5, JLabel AreaT1, JLabel AreaT2, JLabel AreaT3, JLabel AreaT4, JLabel AreaT5) {
+    /* 
+    Controller(JButton resetButton, JButton[][] areaButtons, JCheckBox markButton, JTextField TimerBox, JTextField PointsBox, JComboBox<Object> LanguageBox, JLabel AreaL1, JLabel AreaL2, JLabel AreaL3, JLabel AreaL4, JLabel AreaL5, JLabel AreaT1, JLabel AreaT2, JLabel AreaT3, JLabel AreaT4, JLabel AreaT5, View gameView) {
         this.resetButton = resetButton;
         this.markButton = markButton;
         this.areaButtons = areaButtons;
@@ -37,18 +38,50 @@ public class Controller implements ActionListener{
         this.AreaT3 = AreaT3;
         this.AreaT4 = AreaT4;
         this.AreaT5 = AreaT5;
+        this.view = gameView;
     }
     */
+
     
-    Controller(JButton resetButton) { // right panel
+    Controller(JButton resetButton, View gameView) { // right panel
+        for (int i = 0; i < model.DimensionY; i++) {
+            for (int j = 0; j < model.DimensionX; j++) {
+                this.areaButtons[i][j] = new JButton(Integer.toString(i)+ "," + Integer.toString(j));
+            }
+        }
+        this.view = gameView;
         this.resetButton = resetButton;
-        System.out.println(this.resetButton);
+        //resetButton.addActionListener(this);
     }
-    
+
+    Controller(JCheckBox markButton, View gameView) { // right panel
+        this.view = gameView;
+        addListeners();
+        this.markButton = markButton;
+        System.out.println("test2");
+        //this.view.addActionListeners(LanguageBox, LanguageBox);
+        //markButton.addActionListener(this);
+    }
+
+    Controller(JButton[][] areaButtons, JButton areaButton, int dimx, int dimy, View gameView) {
+        this.view = gameView;
+        //model.areaButton = areaButton;
+        //this.areaButton.addActionListener(this);
+        try {
+            this.areaButtons[dimx][dimy] = areaButton;
+        } catch (NullPointerException e) {
+            System.out.println("fail");
+        }
+        //areaButton.addActionListener(this);
+        
+    }
 
     Controller(Model gameModel, View gameView) {
-        model = gameModel;
-        view = gameView;
+        this.model = gameModel;
+        this.view = gameView;
+        //areaButtons = new JButton[model.DimensionX][model.DimensionY];
+        addListeners();
+        //areaButtons = new JButton[model.DimensionX][model.DimensionY];
         configureBinaryString(model.Board);
     }
 
@@ -77,31 +110,51 @@ public class Controller implements ActionListener{
         view.createLogTextNNL("Game Set");
         return BinaryString;
     }
-
+    
+    private void addListeners() {
+        //System.out.println("test");
+        view.addActionListeners(new ActionListener() {
+            //@Override
+            public void actionPerformed(ActionEvent e) {
+                view.createLogTextNL("reset");
+            }
+        },
+        new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.createLogTextNL("mark");
+            }
+        },
+        new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        if (e.getSource().equals(view.areaButtons[i][j])) {
+                            view.createLogTextNL(Integer.toString(i) + ", " + Integer.toString(j));
+                        }
+                    }
+                } 
+            }
+        });
+    } 
+    /*
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
-        System.out.println(resetButton);
-        System.out.println(e.getSource().equals(resetButton));
         if (e.getSource().equals(resetButton)) {
-            try {
-                System.out.println(view.test);
-            } catch(NullPointerException g) {
-                System.out.println(g + ", class invalid");
-            }
-            try {
-                view.createLogTextNL("test");
-            } catch(NullPointerException g) {
-                System.out.println(g + ", function invalid");
-            }
+            view.createLogTextNL("reset");
+        } else if (e.getSource().equals(markButton)) {
+            view.createLogTextNL("mark");
         }
-        /*
+         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (e.getSource().equals(areaButtons[i][j])) {
-                    view.createLogTextNNL("test");
+                    view.createLogTextNNL(Integer.toString(i) + ", " + Integer.toString(j));
                 }
             }
-        }
-        */    
+        }  
+         
     }
+    */
+    
 }
