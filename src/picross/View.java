@@ -38,15 +38,6 @@ public class View extends JFrame{
         private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
         private JComboBox<Object> LanguageBox;
         public int test = 100;
-        
-        public ActionListener actionResetListener;
-        public ActionListener actionMarkListener;
-        public ActionListener actionButtonsListener;
-        
-        //public ActionListener actionResetListener = new Controller(resetButton);
-
-        //private ActionListener actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5, this);
-        
 
     View() {
         JFrame frame = new JFrame("Picross");
@@ -118,26 +109,8 @@ public class View extends JFrame{
         PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
 
-        //JButton resetButton = new JButton("Reset");
-        //ActionListener listener = new Controller();
         resetButton = new JButton("Reset");
-        //ActionListener actionResetListener = new Controller(resetButton);
-        //actionResetListener = new Controller(resetButton, this);
-        //actionResetListener = new ActionController(resetButton);
-        //resetButton.setActionCommand("resetButton");
-        //resetButton.addActionListener(actionResetListener);
-        //resetButton.addActionListener(this);
-        /* 
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Area1.setText(Area1.getText() + "\n Reset game");
-            }
-        });
-        */
         
-        
-
 		JScrollPane textArea1 = new JScrollPane(Area1);  
 		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Area1.setEditable(false);
@@ -179,13 +152,8 @@ public class View extends JFrame{
         //String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
 
         markButton = new JCheckBox("Mark");
-        //actionMarkListener = new Controller(markButton, this);
-        //actionResetListener = new ActionController(resetButton);
-        markButton.addActionListener(actionMarkListener);
-        //markButton.addActionListener((ActionListener) this);
 
         LanguageBox = new JComboBox<Object>(Languages);
-		//LanguageBox.addActionListener(LanguageBox);
 		LanguageBox.setSelectedIndex(1);
 
         //JTextArea textArea3 = new JTextArea(text, 7, 70);
@@ -258,22 +226,6 @@ public class View extends JFrame{
 				final int final_j = j;
 				areaButtons[i][j] = new JButton();
                 areaButtons[i][j].setBackground(new Color(0x7CCD7C));
-                //actionButtonsListener = new Controller(areaButtons[i][j], i, j, this);
-                //actionButtonsListener = new Controller(areaButtons, areaButtons[i][j], i, j, this);
-                
-                //actionResetListener = new ActionController(resetButton);
-                //areaButtons[i][j].addActionListener(actionButtonsListener);
-                //areaButtons[i][j].addActionListener(this);
-                /* 
-				areaButtons[i][j].addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						//Area1.setText(Area1.getText() + "\n Pos " + (final_i + 1) + ", " + (final_j + 1));
-                        selectedButton[final_i][final_j] = true;
-					}
-				});
-                */
-
 				buttons.add(areaButtons[i][j]);
 			}
 		}
