@@ -204,7 +204,7 @@ public class View extends JFrame{
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;        
         //right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
-        right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
+        right.add(new JLabel(new ImageIcon("imgfolder/PICROSS1.png")), c);
 
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.weightx = 1.0;
