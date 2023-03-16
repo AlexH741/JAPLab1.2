@@ -44,14 +44,18 @@ public class View extends JFrame{
 
         JWindow window = new JWindow();
 	    JProgressBar bar;
+
+    private JMenu Game;
+
+    private JMenu Help;
     /**
 	 * The JMenuItem to indicate weather the user wants to see the solution to the current match
 	 */
-	private JMenuItem solution;
+	private JMenuItem Solution;
 	/**
 	 * The JMenuItem to indicate weather the user wants to start a new game
 	 */
-	private JMenuItem nw;
+	private JMenuItem New;
     /**
 	 * The JMenuItem to indicate weather the user wants to run debug senario 3 of the program
 	 */
@@ -84,21 +88,27 @@ public class View extends JFrame{
 	 * Icon image for solution JMenuItem
 	 */
 	private ImageIcon solFileImg;
+
+    private ImageIcon abtFileImg;
+
+    private ImageIcon clrFileImg;
 	
 	/**
 	 * The main menu bar for the user
 	 */
 	private JMenuBar menuBar;
+
+    private JMenuItem Colors;
 	
 	/**
 	 * menu item to display programmer information
 	 */
-	private JMenuItem about;
+	private JMenuItem About;
 	
 	/**
 	 * menu item to exit application
 	 */
-	private JMenuItem exit;
+	private JMenuItem Exit;
 
         public void SplashScreenW()  {
 		
@@ -135,8 +145,10 @@ public class View extends JFrame{
         JFrame frame = new JFrame("Picross");
         try {
             newFileImg = new ImageIcon("imgfolder\\newicon.gif");
-            extFileImg = new ImageIcon("imgfolder/nexticon.gif");
+            extFileImg = new ImageIcon("imgfolder\\nexticon.gif");
             solFileImg = new ImageIcon("imgfolder\\solicon.gif");
+            abtFileImg = new ImageIcon("imgfolder\\abouticon.gif");
+            clrFileImg = new ImageIcon("imgfolder\\coloricon.gif");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -268,27 +280,33 @@ public class View extends JFrame{
     }
 
     private JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenuItem New = new JMenuItem("New", newFileImg); 
+        menuBar = new JMenuBar();
+
+        Game = new JMenu("Game");
+        Help = new JMenu("Help");
+
+        New = new JMenuItem("New", newFileImg); 
 		New.setAccelerator(keyNew);
 		New.setMnemonic(KeyEvent.VK_N);
 		New.setActionCommand("New");
 		
-		newConnect = new JMenuItem("New Connection");
-		disconnect = new JMenuItem("Disconnect");
-		
-		disconnect.setEnabled(false);
-
-        JMenu Game = new JMenu("Game");
-        JMenu Help = new JMenu("Help");
-        JMenuItem Solution  = new JMenuItem("Solution");
-        JMenuItem Exit = new JMenuItem("Exit"); 
-
+        Solution  = new JMenuItem("Solution");
         Solution.setAccelerator(keySolution);
-		Solution.setIcon(solFileImg);
-        Exit.setIcon(extFileImg);
-        JMenuItem Colors = new JMenuItem("Colors");
-        JMenuItem About = new JMenuItem("About");
+        Solution.setIcon(solFileImg);
+
+        Exit = new JMenuItem("Exit");
+        Exit.setIcon(extFileImg); 
+
+        Colors = new JMenuItem("Colors");
+        Colors.setIcon(clrFileImg);
+        
+        About = new JMenuItem("About");
+        About.setIcon(abtFileImg);
+
+        newConnect = new JMenuItem("New Connection");
+		disconnect = new JMenuItem("Disconnect");
+        disconnect.setEnabled(false);
+
         Game.add(New);
         Game.add(Solution);
         Game.add(Exit);
