@@ -32,15 +32,22 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 public class View extends JFrame{
+        private Controller gameController;
+        private Model gameModel;
         private JTextArea Area1 = new JTextArea(30, 10);
         private JButton[][] areaButtons = new JButton[5][5];
         private JCheckBox markButton = new JCheckBox();
+        private boolean[][] userSelected;
+        private boolean[][] userMarked;
         //private Boolean[][] selectedButton = new Boolean[5][5];
         private JButton resetButton;
         private JTextField TimerBox, PointsBox;
         private JLabel AreaL[]; 
         private JLabel AreaT[];
         private JComboBox<Object> LanguageBox;
+        private Color correctSelected = new Color(0x7CCD7C);
+        private Color correctMarked = new Color(255, 255, 0);
+        private Color incorrectColor = new Color(255, 0, 0);
 
         JWindow window = new JWindow();
 	    JProgressBar bar;
@@ -139,9 +146,13 @@ public class View extends JFrame{
             }
         }   
 
-    View(int x, int y) {
-        AreaL = new JLabel[y];
-        AreaT = new JLabel[x];
+    View(Model gameModel) {
+        this.gameModel = gameModel;
+        //gameController = new Controller(this.gameModel, this);
+        AreaL = new JLabel[gameModel.DimensionY];
+        AreaT = new JLabel[gameModel.DimensionX];
+        userSelected = new boolean[gameModel.DimensionX][gameModel.DimensionY];
+        userMarked = new boolean[gameModel.DimensionX][gameModel.DimensionY];
         JFrame frame = new JFrame("Picross");
         try {
             newFileImg = new ImageIcon("imgfolder\\newicon.gif");
@@ -172,11 +183,13 @@ public class View extends JFrame{
         }
         */
 
-        frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, y));
+        frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, this.gameModel.DimensionY));
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
-        frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, x));
-        frame.add(BorderLayout.CENTER, createButtons(buttonPanel, x, y));
+        frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, this.gameModel.DimensionX));
+        frame.add(BorderLayout.CENTER, createButtons(buttonPanel, this.gameModel.DimensionX, this.gameModel.DimensionY));
         frame.setJMenuBar(createMenuBar());
+        gameController = new Controller(this.gameModel, this);
+        addController();
         frame.pack();
 		frame.setVisible(true);
     }
@@ -299,7 +312,7 @@ public class View extends JFrame{
 
         Colors = new JMenuItem("Colors");
         Colors.setIcon(clrFileImg);
-        
+
         About = new JMenuItem("About");
         About.setIcon(abtFileImg);
 
@@ -362,15 +375,55 @@ public class View extends JFrame{
     public void createLogText(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
     }
-
-    public void addActionListeners(ActionListener r, ActionListener m, ActionListener b) {
-        resetButton.addActionListener(r);
-        markButton.addActionListener(m);
+    private void addController() {
+        resetButton.setActionCommand("resetButton");
+        resetButton.addActionListener(gameController);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                areaButtons[i][j].addActionListener(b);
+                areaButtons[i][j].setActionCommand("gridButton " + i + " " + j);
+                areaButtons[i][j].addActionListener(gameController);
             }
         }
+    }
+
+    public void squareClicked(int i, int j) {
+        if (gameModel.Board[i][j] && !markButton.isSelected()) {// correct guess of occupied pattern space
+            changeColor(i, j, correctSelected);// green
+            userSelected[i][j] = true;
+            userMarked[i][j] = false;
+        } else if (!gameModel.Board[i][j] && !markButton.isSelected()) {// correct guess of non-occupied pattern space
+            changeColor(i, j, incorrectColor);// red
+            userSelected[i][j] = true;
+            userMarked[i][j] = false;
+        } else if (gameModel.Board[i][j] && markButton.isSelected()) {// incorrect guess of non-occupied pattern space
+            changeColor(i, j, incorrectColor);// red
+            userSelected[i][j] = false;
+            userMarked[i][j] = true;
+        } else if (!gameModel.Board[i][j] && markButton.isSelected()) {// incorrect guess of occupied pattern space
+            changeColor(i, j, correctMarked);// yellow
+            userSelected[i][j] = false;
+            userMarked[i][j] = true;
+        }
+        isComplete();
+    }
+
+    private boolean isComplete() {
+        
+        for (int i = 0; i < gameModel.DimensionX; i++) {
+            for (int j = 0; j < gameModel.DimensionY; j++) {
+                if (gameModel.Board[i][j] && !userSelected[i][j]) {
+                    return false;
+                } else if (!gameModel.Board[i][j] && userSelected[i][j]) {
+                    return false;
+                } else if (!gameModel.Board[i][j] && !userMarked[i][j]) {
+                    return false;
+                } else if (gameModel.Board[i][j] && userMarked[i][j]) {
+                    return false;
+                }
+            }
+        }
+        System.out.println(":)");
+        return true;
     }
 
     public boolean isButton(ActionEvent e, int x , int y) {

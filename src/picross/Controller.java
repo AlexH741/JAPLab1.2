@@ -7,9 +7,13 @@ package src.picross;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.AbstractButton;
+import javax.swing.JComponent;
+
 import java.awt.Color;
 
-public class Controller /*implements ActionListener*/{
+public class Controller implements ActionListener {
     private Model model;
     private View view;
 
@@ -18,26 +22,29 @@ public class Controller /*implements ActionListener*/{
     Controller(Model gameModel, View gameView) {
         this.model = gameModel;
         this.view = gameView;
-        addListeners();
+        // addListeners();
         configureBinaryString(model.Board);
         view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);
     }
 
-    private boolean[][] configureBinaryString(boolean[][] board) {//BinaryString[i] = Integer.toBinaryString(randomNumber);
+    private boolean[][] configureBinaryString(boolean[][] board) {// BinaryString[i] =
+                                                                  // Integer.toBinaryString(randomNumber);
         boolean[][] BinaryString = board;
-        int maxNum = (int)Math.pow(2, model.DimensionX) - 1; //determines the largest decimal number that can be represented in binary for the number of buttons in the board rows.
+        int maxNum = (int) Math.pow(2, model.DimensionX) - 1; // determines the largest decimal number that can be
+                                                              // represented in binary for the number of buttons in the
+                                                              // board rows.
         for (int i = 0; i < model.DimensionY; i++) {
-            int randomNumber = (int)Math.floor(Math.random() * (maxNum - 0 + 1) + 0);
+            int randomNumber = (int) Math.floor(Math.random() * (maxNum - 0 + 1) + 0);
             String binary = Integer.toBinaryString(randomNumber);
-            System.out.println(binary.length()+(binary.length() - model.DimensionX));
-            for (int j = 0; j < binary.length()+(binary.length() - model.DimensionX); j++) {
+            System.out.println(binary.length() + (binary.length() - model.DimensionX));
+            for (int j = 0; j < binary.length() + (binary.length() - model.DimensionX); j++) {
                 if (binary.charAt(j) == '1') {
                     BinaryString[i][j] = true;
                 } else {
                     BinaryString[i][j] = false;
                 }
-                
-            } 
+
+            }
         }
         view.changeLabelText(BinaryString, model.DimensionX, model.DimensionY);
         for (int i = 0; i < model.DimensionY; i++) {
@@ -49,45 +56,42 @@ public class Controller /*implements ActionListener*/{
         view.createLogTextNNL("Game Set");
         return BinaryString;
     }
-    
-    private void addListeners() {
-        view.addActionListeners(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                view.createLogTextNL("reset");
-            }
-        },
-        new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //view.createLogTextNL("mark");
-                if (markStatus == false) {
-                    markStatus = true;
-                } else if (markStatus == true) {
-                    markStatus = false;
-                }
-                
-            }
-        },
-        new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < model.DimensionX; i++) {
-                    for (int j = 0; j < model.DimensionX; j++) {
-                        if (view.isButton(e, i, j)) {
-                            if (model.Board[i][j] && markStatus) {//correct guess of occupied pattern space
-                                view.changeColor(i, j, new Color(0x7CCD7C));//green
-                            } else if (!model.Board[i][j] && !markStatus) {//correct guess of non-occupied pattern space
-                                view.changeColor(i, j, new Color(255, 255, 0));//yellow
-                            } else if (model.Board[i][j] && !markStatus) {//incorrect guess of non-occupied pattern space
-                                view.changeColor(i, j, new Color(255, 0, 0));//red
-                            } else if (!model.Board[i][j] && markStatus) {//incorrect guess of occupied pattern space
-                                view.changeColor(i, j, new Color(255, 0, 0));//red
-                            }
-                        }
+
+    public void actionPerformed(ActionEvent e) {
+        Object event = e.getSource();
+        if (event instanceof AbstractButton) {
+            AbstractButton event2 = (AbstractButton) event;
+            String command = event2.getActionCommand();
+            String commands[] = command.split(" ");
+            switch (commands[0]) {
+                case "resetButton":
+                    view.createLogTextNL("reset");
+                    break;
+                case "markButton":
+                    if (markStatus == false) {
+                        markStatus = true;
+                    } else if (markStatus == true) {
+                        markStatus = false;
                     }
-                }
+                    break;
+                case "gridButton":
+                    int i = Integer.parseInt(commands[1]);
+                    int j = Integer.parseInt(commands[2]);
+                    view.squareClicked(i, j);
+                case "LanguageBox":
+                    break;
+                case "New":
+                    
+                    break;
+                case "Solution":
+                    break;
+                case "Exit":
+                    break;
+                case "Colors":
+                    break;
+                case "About":
+                    break;
             }
-        });
+        }
     }
 }
