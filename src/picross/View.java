@@ -307,7 +307,11 @@ public class View extends JFrame{
         }
     }
 
+    public boolean booleantest() {
+        return true;
+    }
+
     public boolean isButton(ActionEvent e, int x , int y) {
-        return (e.getSource().equals(areaButtons[x][y]));
+        return e.getSource().equals(areaButtons[x][y]);
     }
 }
