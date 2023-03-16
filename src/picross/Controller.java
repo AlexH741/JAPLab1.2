@@ -71,13 +71,17 @@ public class Controller /*implements ActionListener*/{
         new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //view.isButton(e, 0, 0);
+                
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
-                        if (e.getSource().equals(view.areaButtons[i][j])) { //variable needs to stay private, create isButton() method instead of this
+                        //Syste
+                        if (e.getSource().equals(view.isButton(e, i, j))) { //variable needs to stay private, create isButton() method instead of this
                             view.createLogTextNL(Integer.toString(i) + ", " + Integer.toString(j));
                         }
                     }
-                } 
+                }
+     
             }
         });
     }
