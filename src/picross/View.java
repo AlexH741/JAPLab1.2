@@ -22,24 +22,18 @@ import javax.swing.JPanel;
 import javax.swing.*;
 
 public class View extends JFrame{
-        /* 
         private JTextArea Area1 = new JTextArea(30, 10);
         private JButton[][] areaButtons = new JButton[5][5];
         private JCheckBox markButton = new JCheckBox();
-        private Boolean[][] selectedButton = new Boolean[5][5];
-        */
-        
-        private JTextArea Area1 = new JTextArea(30, 10);
-        JButton[][] areaButtons = new JButton[5][5];
-        private JCheckBox markButton = new JCheckBox();
-        //private Boolean[][] selectedButton = new Boolean[5][5];
         private JButton resetButton;
         private JTextField TimerBox, PointsBox;
-        private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
+        private JLabel[] AreaL;
+        private JLabel[] AreaT;
         private JComboBox<Object> LanguageBox;
-        public int test = 100;
 
-    View() {
+    View(int x, int y) {
+        AreaL = new JLabel[y];
+        AreaT = new JLabel[x];
         JFrame frame = new JFrame("Picross");
 	    frame.setBackground(Color.white);
 	    frame.setMinimumSize(new Dimension(900,800));
@@ -50,7 +44,6 @@ public class View extends JFrame{
 		JPanel textRightPanel = new JPanel();
 		JPanel textLeftPanel = new JPanel();
 		JPanel textTopPanel = new JPanel();
-        //actionListener = new Controller(resetButton, areaButtons, markButton, TimerBox, PointsBox, LanguageBox, AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5, this);
         /* 
         JOptionPane.showMessageDialog(frame, "image here", "", JOptionPane.PLAIN_MESSAGE);
         try { //TODO modify try/catch
@@ -61,39 +54,26 @@ public class View extends JFrame{
         }
         */
 
-        frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel));
+        frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, y));
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
-        frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel));
-        frame.add(BorderLayout.CENTER, createButtons(buttonPanel));
+        frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, x));
+        frame.add(BorderLayout.CENTER, createButtons(buttonPanel, x, y));
         frame.setJMenuBar(createMenuBar());
         frame.pack();
 		frame.setVisible(true);
     }
     
-    private JPanel createLeftPanel(JPanel left) {
+    private JPanel createLeftPanel(JPanel left, int y) {
         left.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        //String text = "\n\n\n\n\t (1,1) \n\n\n\n\n\n\n\n\n\n\t (2,2) \n\n\n\n\n\n\n\n\n\n\n\t (3, 3) \n\n\n\n\n\n\n\n\n\n\t (4,4)";
-        //JTextArea Area2 = new JTextArea(text , 40, 10);
-        AreaL1 = new JLabel("(1,1)");
-        AreaL2 = new JLabel("(1,2)");
-        AreaL3 = new JLabel("(1,3)");
-        AreaL4 = new JLabel("(1,4)");
-        AreaL5 = new JLabel("(1,5)");
-        //Area2.setEditable(false); 
         c.fill = GridBagConstraints.RELATIVE;
         c.ipadx = 50;
-        c.ipady = 125; 
-		left.add(AreaL1, c);
-        c.gridy = 1;
-        left.add(AreaL2, c);
-        c.gridy = 2;
-        left.add(AreaL3, c);
-        c.gridy = 3;
-        left.add(AreaL4, c);
-        c.gridy = 4;
-        left.add(AreaL5, c);
-
+        c.ipady = 125;
+        for (int i =0; i < y; i++) {
+            AreaL[i] = new JLabel("test");
+            c.gridy = i;
+            left.add(AreaL[i], c);
+        }
         return left;
     }
 
@@ -144,88 +124,36 @@ public class View extends JFrame{
         return right;
     }
 
-    private JPanel createTopPanel(JPanel top) {
+    private JPanel createTopPanel(JPanel top, int x) {
         top.setLayout(new GridBagLayout());
-        //top.set
+
         GridBagConstraints c = new GridBagConstraints();
         String[] Languages = {"French" , "English", "Vietnamese"};
-        //String text = "\n\n\n\n\n\n\n\t                 (1,1)\t\t             (2,2)\t\t             (3,3)                                          (4,4)";
 
         markButton = new JCheckBox("Mark");
 
         LanguageBox = new JComboBox<Object>(Languages);
 		LanguageBox.setSelectedIndex(1);
 
-        //JTextArea textArea3 = new JTextArea(text, 7, 70);
-        //textArea3.setEditable(false);
-        AreaT1 = new JLabel("(1,1)");
-        AreaT2 = new JLabel("(1,2)");
-        AreaT3 = new JLabel("(1,3)");
-        AreaT4 = new JLabel("(1,4)");
-        AreaT5 = new JLabel("(1,5)");
-        
-        ///* 
-		//c.fill = GridBagConstraints.RELATIVE;
-        //c.fill = GridBagConstraints.REMAINDER;
-        //c.ipadx = 70;
         c.ipady = 50;
-        //c.anchor = GridBagConstraints.EAST;
-        //top.add(markButton, c);
         double var = 0.1;
         GridBagConstraints t = createGbc(0, 0);
-        //t.ipadx = 65; 
 		top.add(markButton, t);
-        t = createGbc(1, 0);
-        t.weightx = var;
-        top.add(AreaT1, t);
-        //t.ipadx = 0;
-        t = createGbc(2, 0);
-        t.weightx = var;
-        top.add(AreaT2, t);
-        t = createGbc(3, 0);
-        t.weightx = var;
-        top.add(AreaT3, t);
-        t = createGbc(4, 0);
-        t.weightx = var;
-        top.add(AreaT4, t);
-        t = createGbc(5, 0);
-        t.weightx = var;
-        top.add(AreaT5, t);
-        /* 
-        top.add(markButton, createGbc(0, 0));
-        top.add(Area1, createGbc(1, 0));
-        top.add(Area2, createGbc(2, 0));
-        top.add(Area3, createGbc(3, 0));
-        top.add(Area4, createGbc(4, 0));
-        top.add(Area5, createGbc(5, 0));
-        /* 
-        // c.ipadx = 80;
-        c.gridx = 1;
-        top.add(Area1, c);
-        c.gridx = 2;
-        top.add(Area2, c);
-        c.gridx = 3;
-        top.add(Area3, c);
-        c.gridx = 5;
-        top.add(Area4, c);
-        c.gridx = 6;
-        //c.ipadx = 90;
-        top.add(Area5, c);
-        c.gridx = 7;
-        //c.ipadx = 0;
-        //top.add(textArea3);
-        top.add(LanguageBox, c);
-        */
+
+        for (int i =0; i < x; i++) {
+            AreaT[i] = new JLabel("test");
+            t = createGbc(i+1, 0);
+            t.weightx = var;
+            top.add(AreaT[i], t);
+        }
         return top;
     }
 
-    private JPanel createButtons(JPanel buttons) {
-		for (int i = 0; i < 5; i++) {
-			final int final_i = i;
-			for (int j = 0; j < 5; j++) {
-				final int final_j = j;
+    private JPanel createButtons(JPanel buttons, int x, int y) {
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
 				areaButtons[i][j] = new JButton();
-                areaButtons[i][j].setBackground(new Color(0x7CCD7C));
+                areaButtons[i][j].setBackground(new Color(150, 150, 150));
 				buttons.add(areaButtons[i][j]);
 			}
 		}
@@ -306,12 +234,51 @@ public class View extends JFrame{
             }
         }
     }
-
-    public boolean booleantest() {
-        return true;
-    }
-
     public boolean isButton(ActionEvent e, int x , int y) {
         return e.getSource().equals(areaButtons[x][y]);
+    }
+    public void changeColor(int x, int y, Color c) {
+        areaButtons[x][y].setBackground(c);
+    }
+    public void changeLabelText(boolean[][] board, int x, int y) {
+        for(int i = 0; i < x; i++) {
+            String text = "";
+            int num = 0;
+            for (int j = 0; j < y; j++) {
+                if (board[j][i]) {
+                    System.out.println(num);
+                    num++;
+                } else if (!board[j][i] && num > 0) {
+                        System.out.println(text + Integer.toString(num) + ", ");
+                        text = text + Integer.toString(num) + ", ";
+                    
+                    num = 0; 
+                } else if (j+1 == y && text == "") {
+                    text = "0";
+                } else if (j+1 == y && !board[j][i]) {
+                    System.out.println("flag");
+                    text = text.substring(0, text.length() - 2);
+                } else if (j+1 == y && !board[j][i+1]) {
+                    System.out.println("flag2");
+                    text = text.substring(0, text.length() - 2);
+                }
+            }
+            if (num > 0) {
+                System.out.println(text + Integer.toString(num));
+                        text = text + Integer.toString(num);
+            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0 ) {
+                text = text + "mark";
+                //text = text + text.substring(0, text.length() - 2);
+            }
+            num = 0;
+            //text = text + text.substring(0, text.length() -2);
+            AreaT[i].setText(text);
+        }
+        for (int i = 0; i < y; i++) {
+            String text = "";
+            for(int j = 0; j < x; j++) {
+            }
+            AreaL[i].setText("");
+        }
     }
 }

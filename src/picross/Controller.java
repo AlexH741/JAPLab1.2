@@ -7,26 +7,20 @@ package src.picross;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import java.awt.Color;
 
 public class Controller /*implements ActionListener*/{
     private Model model;
     private View view;
 
-    private JButton[][] areaButtons = new JButton[5][5];
-    private JButton areaButton;
-    private JCheckBox markButton;
-    //private Boolean[][] selectedButton = new Boolean[5][5];
-    private JButton resetButton;
-    private JTextField TimerBox, PointsBox;
-    private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
-    private JComboBox<Object> LanguageBox;
+    boolean markStatus = false;
 
     Controller(Model gameModel, View gameView) {
         this.model = gameModel;
         this.view = gameView;
         addListeners();
         configureBinaryString(model.Board);
+        view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);
     }
 
     private boolean[][] configureBinaryString(boolean[][] board) {//BinaryString[i] = Integer.toBinaryString(randomNumber);
@@ -45,6 +39,7 @@ public class Controller /*implements ActionListener*/{
                 
             } 
         }
+        view.changeLabelText(BinaryString, model.DimensionX, model.DimensionY);
         for (int i = 0; i < model.DimensionY; i++) {
             for (int j = 0; j < model.DimensionX; j++) {
                 view.createLogTextNNL(String.valueOf(BinaryString[i][j]) + " ");
@@ -65,34 +60,34 @@ public class Controller /*implements ActionListener*/{
         new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.createLogTextNL("mark");
+                //view.createLogTextNL("mark");
+                if (markStatus == false) {
+                    markStatus = true;
+                } else if (markStatus == true) {
+                    markStatus = false;
+                }
+                
             }
         },
         new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //view.isButton(e, 0, 0);\
-                /* 
-                boolean test1 = e.getSource().equals(view.isButton(e, 4, 4));
-                boolean test2 = view.booleantest();
-                System.out.println("test = " + test1);
-                System.out.println("test = " + test2);
-                if (test1 == true) { //variable needs to stay private, create isButton() method instead of this
-                    view.createLogTextNL(Integer.toString(4) + ", " + Integer.toString(4));
-                }
-                */
-                
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        //System.out.println(e.getSource().equals(view.isButton(e, i, j)));
-                        //System.out.println(e.getSource().equals(view.isButton(e, i, j)));
-                        if (view.isButton(e, i, j)) { //variable needs to stay private, create isButton() method instead of this
-                            view.createLogTextNL(Integer.toString(i) + ", " + Integer.toString(j));
+                for (int i = 0; i < model.DimensionX; i++) {
+                    for (int j = 0; j < model.DimensionX; j++) {
+                        if (view.isButton(e, i, j)) {
+                            if (model.Board[i][j] && markStatus) {//correct guess of occupied pattern space
+                                view.changeColor(i, j, new Color(0x7CCD7C));//green
+                            } else if (!model.Board[i][j] && !markStatus) {//correct guess of non-occupied pattern space
+                                view.changeColor(i, j, new Color(255, 255, 0));//yellow
+                            } else if (model.Board[i][j] && !markStatus) {//incorrect guess of non-occupied pattern space
+                                view.changeColor(i, j, new Color(255, 0, 0));//red
+                            } else if (!model.Board[i][j] && markStatus) {//incorrect guess of occupied pattern space
+                                view.changeColor(i, j, new Color(255, 0, 0));//red
+                            }
                         }
                     }
                 }
             }
         });
     }
-    
 }

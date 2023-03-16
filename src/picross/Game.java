@@ -15,7 +15,7 @@ public class Game{ //TODO: Javadoc
 
 	public static void main(String[] args) {
 		Model gameModel = new Model();
-		View gameView = new View();
+		View gameView = new View(gameModel.DimensionX, gameModel.DimensionY);
 		Controller gameController = new Controller(gameModel, gameView);
 		///UI newUI = new UI();
 	}
