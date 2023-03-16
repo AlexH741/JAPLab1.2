@@ -14,10 +14,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import javax.swing.ImageIcon;
+import javax.swing.JWindow;
+import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.KeyStroke;
+import javax.swing.ImageIcon;
+import java.awt.BorderLayout;
 
 import javax.swing.*;
 
@@ -25,25 +35,111 @@ public class View extends JFrame{
         private JTextArea Area1 = new JTextArea(30, 10);
         private JButton[][] areaButtons = new JButton[5][5];
         private JCheckBox markButton = new JCheckBox();
+        //private Boolean[][] selectedButton = new Boolean[5][5];
         private JButton resetButton;
         private JTextField TimerBox, PointsBox;
-        private JLabel[] AreaL;
-        private JLabel[] AreaT;
+        private JLabel AreaL1, AreaL2, AreaL3, AreaL4, AreaL5, AreaT1, AreaT2, AreaT3, AreaT4, AreaT5;
         private JComboBox<Object> LanguageBox;
+
+        JWindow window = new JWindow();
+	    JProgressBar bar;
+    /**
+	 * The JMenuItem to indicate weather the user wants to see the solution to the current match
+	 */
+	private JMenuItem solution;
+	/**
+	 * The JMenuItem to indicate weather the user wants to start a new game
+	 */
+	private JMenuItem nw;
+    /**
+	 * The JMenuItem to indicate weather the user wants to run debug senario 3 of the program
+	 */
+	private JMenuItem newConnect;
+	/**
+	 * The JMenuItem to indicate weather the user wants to run debug senario 3 of the program
+	 */
+	private JMenuItem disconnect;
+
+    /**
+	 * The shortcut key for the solution JMenuItem (ALT+S)
+	 */
+	private final KeyStroke keySolution = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK);
+    /**
+	 * The shortcut key for the new JMenuItem (CRTL+N)
+	 */
+	private final KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK);
+    /**
+	 * Icon image for nw JMenuItem
+	 */
+	private ImageIcon newFileImg;
+	
+	/**
+	 * Icon image for exit JMenuItem
+	 */
+	private ImageIcon extFileImg;
+	
+	/**
+	 * Icon image for solution JMenuItem
+	 */
+	private ImageIcon solFileImg;
+	
+	/**
+	 * The main menu bar for the user
+	 */
+	private JMenuBar menuBar;
+	
+	/**
+	 * menu item to display programmer information
+	 */
+	private JMenuItem about;
+	
+	/**
+	 * menu item to exit application
+	 */
+	private JMenuItem exit;
+
+        public SplashScreenW()  {
+		
+            bar = new JProgressBar();
+            window.getContentPane().add(
+            new JLabel(new ImageIcon(""), SwingConstants.CENTER), BorderLayout.CENTER);
+            window.setBounds(0, 0, 300, 300);
+            window.getContentPane().add(bar, BorderLayout.SOUTH);
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
+            window.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            try {
+                progressBar();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            window.dispose();
+            
+        }
+        
+        private void progressBar() throws InterruptedException {
+            bar.setValue(10);
+            bar.setStringPainted(true);
+            int counter = 1;
+            while(counter <= 100) {
+                bar.setValue(counter++);
+                Thread.sleep(1); //COMABACVK
+            }
+        }   
 
     View(int x, int y) {
         AreaL = new JLabel[y];
         AreaT = new JLabel[x];
         JFrame frame = new JFrame("Picross");
-	    frame.setBackground(Color.white);
-	    frame.setMinimumSize(new Dimension(900,800));
-	    frame.setResizable(false);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      frame.setBackground(Color.white);
+	      frame.setMinimumSize(new Dimension(900,800));
+	      frame.setResizable(false);
+	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel buttonPanel = new JPanel(new GridLayout(5,5,5,5));
-		JPanel textRightPanel = new JPanel();
-		JPanel textLeftPanel = new JPanel();
-		JPanel textTopPanel = new JPanel();
+		    JPanel textRightPanel = new JPanel();
+		    JPanel textLeftPanel = new JPanel();
+		    JPanel textTopPanel = new JPanel();
         /* 
         JOptionPane.showMessageDialog(frame, "image here", "", JOptionPane.PLAIN_MESSAGE);
         try { //TODO modify try/catch
@@ -58,6 +154,10 @@ public class View extends JFrame{
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
         frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, x));
         frame.add(BorderLayout.CENTER, createButtons(buttonPanel, x, y));
+        frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel));
+        frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
+        frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel));
+        frame.add(BorderLayout.CENTER, createButtons(buttonPanel));
         frame.setJMenuBar(createMenuBar());
         frame.pack();
 		frame.setVisible(true);
@@ -88,11 +188,11 @@ public class View extends JFrame{
         JLabel pointsLabel = new JLabel("Points: ");
         PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
-
+        
         resetButton = new JButton("Reset");
         
-		JScrollPane textArea1 = new JScrollPane(Area1);  
-		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		    JScrollPane textArea1 = new JScrollPane(Area1);  
+		    textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Area1.setEditable(false);
 
         c.fill = GridBagConstraints.BOTH;
@@ -108,7 +208,7 @@ public class View extends JFrame{
         right.add(TimerBox, c);
 
         c.weightx = 0;
-		right.add(textArea1, c);
+		    right.add(textArea1, c);
 
         c.fill = GridBagConstraints.RELATIVE;
         c.gridy = 3;
@@ -160,13 +260,30 @@ public class View extends JFrame{
         return buttons;
     }
 
+
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+        JMenuItem nw = new JMenuItem("New"); 
+		nw.setAccelerator(keyNew);
+		nw.setMnemonic(KeyEvent.VK_N);
+		nw.setActionCommand("New");
+		nw.setIcon(newFileImg);
+		
+		newConnect = new JMenuItem("New Connection");
+		disconnect = new JMenuItem("Disconnect");
+		
+		disconnect.setEnabled(false);
+
         JMenu Game = new JMenu("Game");
         JMenu Help = new JMenu("Help");
         JMenuItem New = new JMenuItem("New"); 
         JMenuItem Solution  = new JMenuItem("Solution");
         JMenuItem Exit = new JMenuItem("Exit"); 
+
+        solution.setAccelerator(keySolution);
+		solution.setIcon(solFileImg);
+        JMenuItem Exit = new JMenuItem("Exit"); 
+        exit.setIcon(extFileImg);
         JMenuItem Colors = new JMenuItem("Colors");
         JMenuItem About = new JMenuItem("About");
         Game.add(New);
