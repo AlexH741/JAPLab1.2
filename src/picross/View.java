@@ -135,16 +135,10 @@ public class View extends JFrame{
         JFrame frame = new JFrame("Picross");
         try {
             newFileImg = new ImageIcon("imgfolder\\newicon.gif");
-            //new ImageIcon("imgfolder\\newicon.gif")
-            //new ImageIcon("bin/PICROSS1.png")
-            //new ImageIcon("imgfolder/nexticon.gif");
             extFileImg = new ImageIcon("imgfolder/nexticon.gif");
             solFileImg = new ImageIcon("imgfolder\\solicon.gif");
         } catch (Exception e) {
             System.out.println(e);
-            //newFileImg = null;
-            //extFileImg = null;
-            //solFileImg = null;
         }
 
 	      frame.setBackground(Color.white);
@@ -258,6 +252,7 @@ public class View extends JFrame{
             t.weightx = var;
             top.add(AreaT[i], t);
         }
+        top.add(LanguageBox);
         return top;
     }
 
@@ -271,7 +266,6 @@ public class View extends JFrame{
 		}
         return buttons;
     }
-
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -360,9 +354,11 @@ public class View extends JFrame{
             }
         }
     }
+
     public boolean isButton(ActionEvent e, int x , int y) {
         return e.getSource().equals(areaButtons[x][y]);
     }
+
     public void changeColor(int x, int y, Color c) {
         areaButtons[x][y].setBackground(c);
     }
@@ -371,30 +367,24 @@ public class View extends JFrame{
             String text = "";
             int num = 0;
             for (int j = 0; j < y; j++) {
-                if (board[j][i]) {
+                if (board[j][i]) {// if position has 1 
                     System.out.println(num);
-                    num++;
-                } else if (!board[j][i] && num > 0) {
-                        System.out.println(text + Integer.toString(num) + ", ");
-                        text = text + Integer.toString(num) + ", ";
+                    num++; //increment number
+                } else if (!board[j][i] && num != 0) { // if position isn't occupied
+                        System.out.println(text + Integer.toString(num) + " ");
+                        text = text + Integer.toString(num) + " ";// add 
                     
                     num = 0; 
                 } else if (j+1 == y && text == "") {
                     text = "0";
-                } else if (j+1 == y && !board[j][i]) {
-                    System.out.println("flag");
-                    text = text.substring(0, text.length() - 2);
-                } else if (j+1 == y && !board[j][i+1]) {
-                    System.out.println("flag2");
-                    text = text.substring(0, text.length() - 2);
                 }
             }
             if (num > 0) {
                 System.out.println(text + Integer.toString(num));
                         text = text + Integer.toString(num);
             } else if ((text.length() % 2 == 0) && text.length() % 3 == 0 ) {
-                text = text + "mark";
-                //text = text + text.substring(0, text.length() - 2);
+                //text = text + "mark";
+                text = text + text.substring(0, text.length() - 2);
             }
             num = 0;
             //text = text + text.substring(0, text.length() -2);
@@ -402,9 +392,29 @@ public class View extends JFrame{
         }
         for (int i = 0; i < y; i++) {
             String text = "";
-            for(int j = 0; j < x; j++) {
+            int num = 0;
+            for (int j = 0; j < y; j++) {
+                if (board[i][j]) {
+                    System.out.println(num);
+                    num++;
+                } else if (!board[i][j] && num > 0) {
+                        System.out.println(text + Integer.toString(num) + " ");
+                        text = text + Integer.toString(num) + " ";
+                    
+                    num = 0; 
+                } else if (j+1 == y && text == "") {
+                    text = "0";
+                }
             }
-            AreaL[i].setText("");
+            if (num > 0) {
+                System.out.println(text + Integer.toString(num));
+                        text = text + Integer.toString(num);
+            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0 ) {
+                text = text + text.substring(0, text.length() - 2);
+            }
+            num = 0;
+            //text = text + text.substring(0, text.length() -2);
+            AreaL[i].setText(text);
         }
     }
 }
