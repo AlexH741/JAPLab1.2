@@ -17,10 +17,10 @@ SET JARNAME=picross.jar
 SET JAROUT=picross-jar.out
 SET JARERR=picross-jar.err
 SET DOCDIR=doc
-SET DOCPACK=picross
+SET DOCPACK=src.picross
 SET DOCERR=picross-javadoc.err
 SET MAINCLASSSRC=src/picross/Game.java
-SET MAINCLASSBIN=bin/src/picross/Game.class
+SET MAINCLASSBIN=src.picross.Game
 
 @echo off
 
@@ -50,7 +50,7 @@ ECHO "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 ECHO "[LABS SCRIPT ---------------------]"
 
 ECHO "1. Compiling ......................"
-javac -Xlint -cp ".;%SRCDIR%;%LIBDIR%" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
+javac -Xlint -cp ".;%SRCDIR%;" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
 ::[Another option]: javac -Xlint -cp ".;src;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*" src/Lab.java -d bin 2> labs-javac.err
 ::[Another option]: javac -Xlint -cp ".;%SRCDIR%;%LIBDIR%/*" %MAINCLASSSRC% -d %BINDIR% 2> %BINERR%
 
@@ -64,12 +64,12 @@ jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
 
 ECHO "3. Creating Javadoc ..............."
 CD ..
-javadoc -cp "%BINDIR%/*" -d %DOCDIR% -sourcepath %SRCDIR% -subpackages %DOCPACK% 2> %DOCERR%
+javadoc -cp ".;%BINDIR%;*" -d %DOCDIR% -subpackages %DOCPACK% 2> %DOCERR%
 ::[Another option]: javadoc -cp ".;bin;/SOFT/copy/dev/java/javafx/lib/*;/SOFT/COPY/db/derby/lib/*;/SOFT/COPY/dev/LIBS/jar/javax.servlet.jar" --module-path "C:\SOFT\COPY\dev\LIBS\javafx\lib" --add-modules javafx.controls -d doc -sourcepath src -subpackages CST8221 2> labs-javadoc.err
 
 CD bin
 ECHO "4. Running Jar ...................."
-START java "../%LIBDIR%" -jar %JARNAME%
+START java -jar %JARNAME%
 ::[Another option]: start java --module-path "/SOFT/COPY/dev/LIBS/javafx/lib;/SOFT/COPY/db/derby/lib" --add-modules javafx.controls,javafx.fxml -jar CST8221.jar
 
 ::ECHO "Running  (ouside jar) ............"
