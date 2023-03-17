@@ -1,0 +1,7 @@
+.\src\picross\View.java:34: warning: [serial] serializable class View has no definition of serialVersionUID
+public class View extends JFrame{
+       ^
+.\src\picross\Controller.java:81: warning: [fallthrough] possible fall-through into case
+                case "LanguageBox":
+                ^
+2 warnings

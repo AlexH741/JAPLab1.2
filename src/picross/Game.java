@@ -10,9 +10,7 @@ package src.picross;
  * Course: CST8221 - Java Application Programming
  * Lab Professor: 
  */
-
-public class Game{ //TODO: Javadoc
-
+public class Game{ 
 	public static void main(String[] args) {
 		Model gameModel = new Model();
 		View gameView = new View(gameModel);

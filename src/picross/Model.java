@@ -32,8 +32,12 @@ public class Model {
     Model() {
 
     }
-
-    public void loadGame(String filename) {
+   
+    /**
+    * loads previous game configuration from file
+    * @param filename
+   */ 
+     public void loadGame(String filename) {
         File file = new File(filename);
         Scanner scanner = null;
         try {
