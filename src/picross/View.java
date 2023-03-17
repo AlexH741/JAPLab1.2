@@ -55,6 +55,9 @@ public class View extends JFrame{
     private JMenu Game;
 
     private JMenu Help;
+    private JMenuItem loadGame;
+    private JMenuItem saveGame;
+
     /**
 	 * The JMenuItem to indicate weather the user wants to see the solution to the current match
 	 */
@@ -85,7 +88,8 @@ public class View extends JFrame{
 	 */
 	//private ImageIcon newFileImg;
     private ImageIcon newFileImg;
-	
+
+    private ImageIcon victoryImage;
 	/**
 	 * Icon image for exit JMenuItem
 	 */
@@ -144,9 +148,10 @@ public class View extends JFrame{
                 bar.setValue(counter++);
                 Thread.sleep(1); //COMABACVK
             }
-        }   
+        }  
 
     View(Model gameModel) {
+        splashScreen();
         this.gameModel = gameModel;
         //gameController = new Controller(this.gameModel, this);
         AreaL = new JLabel[gameModel.DimensionY];
@@ -173,16 +178,7 @@ public class View extends JFrame{
 		    JPanel textRightPanel = new JPanel();
 		    JPanel textLeftPanel = new JPanel();
 		    JPanel textTopPanel = new JPanel();
-        /* 
-        JOptionPane.showMessageDialog(frame, "image here", "", JOptionPane.PLAIN_MESSAGE);
-        try { //TODO modify try/catch
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        */
-
+        
         frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, this.gameModel.DimensionY));
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
         frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, this.gameModel.DimensionX));
@@ -190,6 +186,8 @@ public class View extends JFrame{
         frame.setJMenuBar(createMenuBar());
         gameController = new Controller(this.gameModel, this);
         addController();
+        gameModel.saveGame("text.txt");
+
         frame.pack();
 		frame.setVisible(true);
     }
@@ -302,6 +300,10 @@ public class View extends JFrame{
 		New.setAccelerator(keyNew);
 		New.setMnemonic(KeyEvent.VK_N);
 		New.setActionCommand("New");
+
+        loadGame = new JMenuItem("Load Game");
+
+        saveGame = new JMenuItem("Save Game");
 		
         Solution  = new JMenuItem("Solution");
         Solution.setAccelerator(keySolution);
@@ -321,6 +323,8 @@ public class View extends JFrame{
         disconnect.setEnabled(false);
 
         Game.add(New);
+        Game.add(loadGame);
+        Game.add(saveGame);
         Game.add(Solution);
         Game.add(Exit);
 
@@ -378,12 +382,19 @@ public class View extends JFrame{
     private void addController() {
         resetButton.setActionCommand("resetButton");
         resetButton.addActionListener(gameController);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < gameModel.DimensionX; i++) {
+            for (int j = 0; j < gameModel.DimensionY; j++) {
                 areaButtons[i][j].setActionCommand("gridButton " + i + " " + j);
                 areaButtons[i][j].addActionListener(gameController);
             }
         }
+        New.setActionCommand("New");
+        New.addActionListener(gameController);
+        loadGame.setActionCommand("loadGame");
+        loadGame.addActionListener(gameController);
+        saveGame.setActionCommand("saveGame");
+        saveGame.addActionListener(gameController);
+
     }
 
     public void squareClicked(int i, int j) {
@@ -422,8 +433,41 @@ public class View extends JFrame{
                 }
             }
         }
-        System.out.println(":)");
+        victoryScreen();
         return true;
+    }
+
+    private void victoryScreen() {
+        JPanel victoryPanel = new JPanel();
+        BorderLayout layout = new BorderLayout();
+        victoryPanel.setLayout(layout);
+        victoryImage = new ImageIcon("imgfolder\\wingame.png");
+        JButton button = new JButton();
+        button.setIcon(victoryImage);
+        victoryPanel.add(button, BorderLayout.CENTER);
+        JFrame victoryFrame = new JFrame();
+        victoryFrame.setMinimumSize(new Dimension(748,343));
+        victoryFrame.add(victoryPanel);
+        victoryFrame.setVisible(true);
+    }
+
+    private void splashScreen() {
+        JPanel victoryPanel = new JPanel();
+        BorderLayout layout = new BorderLayout();
+        victoryPanel.setLayout(layout);
+        victoryImage = new ImageIcon("imgfolder\\piccross.png");
+        JButton button = new JButton();
+        button.setIcon(victoryImage);
+        victoryPanel.add(button, BorderLayout.CENTER);
+        JFrame victoryFrame = new JFrame();
+        victoryFrame.setMinimumSize(new Dimension(748,343));
+        victoryFrame.add(victoryPanel);
+        victoryFrame.setVisible(true);
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e){
+        }
+        victoryFrame.setVisible(false);
     }
 
     public boolean isButton(ActionEvent e, int x , int y) {

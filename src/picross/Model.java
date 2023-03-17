@@ -2,6 +2,11 @@ package src.picross;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 import javax.swing.*;
 
 /*
@@ -26,5 +31,56 @@ public class Model {
     public boolean[][] Board = new boolean[DimensionX][DimensionY];
     Model() {
 
+    }
+
+    public void loadGame(String filename) {
+        File file = new File(filename);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);//slplit(,) to create string to make line, charat to find each 1 in the line, 1 = true
+            String s = scanner.nextLine();
+            String[] sarray =  s.split(",");
+            DimensionX = sarray[0].length();
+            DimensionY = sarray.length;
+            Board = new boolean[DimensionX][DimensionY];
+
+            for (int i = 0; i < this.DimensionX; i++) {
+                for (int j = 0; j < this.DimensionY; j++) {
+                    char c = sarray[i].charAt(j);
+                    if (c == '1') {
+                        Board[i][j] = true;
+                    } else {
+                        Board[i][j] = true;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } finally {
+            scanner.close();
+        }
+    }
+
+    public void saveGame(String filename) {
+        File file = new File(filename);
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(file);
+            for (int i = 0; i < this.DimensionX; i++) {
+                for (int j = 0; j < this.DimensionY; j++) {
+                    if (Board[i][j]) {
+                        writer.print(1);
+                    }else {
+                        writer.print(0);
+                    }
+                }
+                writer.print(",");
+            }
+            writer.println("");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } finally {
+            writer.close();
+        }
     }
 }

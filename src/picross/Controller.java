@@ -81,7 +81,8 @@ public class Controller implements ActionListener {
                 case "LanguageBox":
                     break;
                 case "New":
-                    
+                    configureBinaryString(model.Board);
+                    view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);  
                     break;
                 case "Solution":
                     break;
@@ -90,6 +91,12 @@ public class Controller implements ActionListener {
                 case "Colors":
                     break;
                 case "About":
+                    break;
+                case "loadGame":
+                    model.loadGame("test.txt");
+                    view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);
+                    break;
+                case "saveGame":
                     break;
             }
         }
