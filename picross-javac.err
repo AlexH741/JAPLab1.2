@@ -1,5 +1,5 @@
 Picked up _JAVA_OPTIONS: -Xmx256M
-.\src\picross\View.java:34: warning: [serial] serializable class View has no definition of serialVersionUID
+.\src\picross\View.java:36: warning: [serial] serializable class View has no definition of serialVersionUID
 public class View extends JFrame{
        ^
 .\src\picross\Controller.java:81: warning: [fallthrough] possible fall-through into case

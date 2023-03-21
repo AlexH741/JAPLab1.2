@@ -350,13 +350,16 @@ public class View extends JFrame{
     public void createLogTextNNL(String text) {
         Area1.setText(Area1.getText() + text );
     }
+
     public void createLogTextNL(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
         System.out.println("New Line");
     }
+
     public void createLogText(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
     }
+
     private void addController() {
         resetButton.setActionCommand("resetButton");
         resetButton.addActionListener(gameController);
@@ -397,7 +400,6 @@ public class View extends JFrame{
     }
 
     private boolean isComplete() {
-        
         for (int i = 0; i < gameModel.DimensionX; i++) {
             for (int j = 0; j < gameModel.DimensionY; j++) {
                 if (gameModel.Board[i][j] && !userSelected[i][j]) {
