@@ -37,10 +37,14 @@ import javax.swing.*;
 public class View extends JFrame{
     private Controller gameController;
     private Model gameModel;
+    private String myLang;
+    private int langIndex = 0;
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUNW, MENULG, MENUSG, MENUSL, MENUEX, MENUCLRS, MENUABT, BTMARK, BTRST, TXTTM, TXTPTS;
     private String[] text = {"Mark", "Timer", "Points", "Reset"};
-    private String[] Languages = {"French" , "English", "Vietnamese"};
-    Locale currentLocale;
-    String SYSTEMMESSAGES = "resources";
+    private String LANG1, LANG2, LANG3;
+    private String[] Languages = {LANG1, LANG2, LANG3};
+    private Locale currentLocale;
+    private String SYSTEMMESSAGES = "resources/texts";
     private ResourceBundle texts;
     private JTextArea Area1 = new JTextArea(30, 10);
     private JButton[][] areaButtons = new JButton[5][5];
@@ -142,7 +146,8 @@ public class View extends JFrame{
         AreaT = new JLabel[gameModel.DimensionX];
         userSelected = new boolean[gameModel.DimensionX][gameModel.DimensionY];
         userMarked = new boolean[gameModel.DimensionX][gameModel.DimensionY];
-        JFrame frame = new JFrame("Picross");
+        updateInterface(langIndex);
+        JFrame frame = new JFrame(TITLE);
         try {
             newFileImg = new ImageIcon("imgfolder\\newicon.gif");
             extFileImg = new ImageIcon("imgfolder\\nexticon.gif");
@@ -153,15 +158,15 @@ public class View extends JFrame{
             System.out.println(e);
         }
 
-	      frame.setBackground(Color.white);
-	      frame.setMinimumSize(new Dimension(900,800));
-	      frame.setResizable(false);
-	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setBackground(Color.white);
+	    frame.setMinimumSize(new Dimension(900,800));
+	    frame.setResizable(false);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel buttonPanel = new JPanel(new GridLayout(5,5,5,5));
-		    JPanel textRightPanel = new JPanel();
-		    JPanel textLeftPanel = new JPanel();
-		    JPanel textTopPanel = new JPanel();
+		JPanel textRightPanel = new JPanel();
+		JPanel textLeftPanel = new JPanel();
+		JPanel textTopPanel = new JPanel();
         
         frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, this.gameModel.DimensionY));
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
@@ -212,11 +217,11 @@ public class View extends JFrame{
         right.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel timerLabel = new JLabel(text[1]+": ");
+        JLabel timerLabel = new JLabel(TXTTM+": ");
         TimerBox = new JTextField("00:00");
         TimerBox.setEditable(false);
 
-        JLabel pointsLabel = new JLabel(text[2]+": ");
+        JLabel pointsLabel = new JLabel(TXTPTS+": ");
         PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
         
@@ -270,10 +275,10 @@ public class View extends JFrame{
 
         GridBagConstraints c = new GridBagConstraints();
 
-        markButton = new JCheckBox("Mark");
+        markButton = new JCheckBox(BTMARK);
 
         LanguageBox = new JComboBox<Object>(Languages);
-		LanguageBox.setSelectedIndex(1);
+		LanguageBox.setSelectedIndex(0);
 
         c.ipady = 50;
         double var = 0.1;
@@ -321,29 +326,29 @@ public class View extends JFrame{
     private JMenuBar createMenuBar() {
         menuBar = new JMenuBar();
 
-        Game = new JMenu("Game");
-        Help = new JMenu("Help");
+        Game = new JMenu(MENUTAB1);
+        Help = new JMenu(MENUTAB2);
 
-        New = new JMenuItem("New", newFileImg); 
+        New = new JMenuItem(MENUNW, newFileImg); 
 		New.setAccelerator(keyNew);
 		New.setMnemonic(KeyEvent.VK_N);
-		New.setActionCommand("New");
+		New.setActionCommand(MENUNW);
 
-        loadGame = new JMenuItem("Load Game");
+        loadGame = new JMenuItem(MENULG);
 
-        saveGame = new JMenuItem("Save Game");
+        saveGame = new JMenuItem(MENUSG);
 		
-        Solution  = new JMenuItem("Solution");
+        Solution  = new JMenuItem(MENUSL);
         Solution.setAccelerator(keySolution);
         Solution.setIcon(solFileImg);
 
-        Exit = new JMenuItem("Exit");
+        Exit = new JMenuItem(MENUEX);
         Exit.setIcon(extFileImg); 
 
-        Colors = new JMenuItem("Colors");
+        Colors = new JMenuItem(MENUCLRS);
         Colors.setIcon(clrFileImg);
 
-        About = new JMenuItem("About");
+        About = new JMenuItem(MENUABT);
         About.setIcon(abtFileImg);
 
         newConnect = new JMenuItem("New Connection");
@@ -427,6 +432,8 @@ public class View extends JFrame{
      * Adds a controller to each component that requires one. 
      */
     private void addController() {
+        LanguageBox.setActionCommand("languageBox");
+        LanguageBox.addActionListener(gameController);
         resetButton.setActionCommand("resetButton");
         resetButton.addActionListener(gameController);
         for (int i = 0; i < gameModel.DimensionX; i++) {
@@ -589,30 +596,54 @@ public class View extends JFrame{
     }
 
     public void updateInterface(int langIndex) {
+        System.out.println("");
         String lang = "";
         String country = "";
         switch(langIndex) {
             case 0:
                 lang = "en";
                 country = "US";
+                System.out.println(country);
                 break;
             case 1:
                 lang = "fr";
                 country = "FR";
+                System.out.println(country);
                 break;
         }
+         
         try { //TODO change resource language files to conform with what we need.
             currentLocale = new Locale.Builder().setLanguage(lang).setRegion(country).build();
             texts = ResourceBundle.getBundle(SYSTEMMESSAGES, currentLocale);
-            text[0] = texts.getString("MARK");
-            text[1] = texts.getString("TIMER");
-            text[2] = texts.getString("POINTS");
-            text[3] = texts.getString("RESET");
-            //Languages[0] = LANG1;
-            //Languages[1] = LANG2; 
-            //Languages[2] = LANG3;  
+            TITLE = texts.getString("TITLE");
+            LANG1 = texts.getString("LANG1");
+            LANG2 = texts.getString("LANG2");
+            LANG3 = texts.getString("LANG3");
+            Languages[0] = LANG1;
+            Languages[1] = LANG2; 
+            Languages[2] = LANG3;  
+            BUTOK = texts.getString("BUTOK");
+            BUTCANCEL = texts.getString("BUTCANCEL");
+            MENUTAB1 = texts.getString("MENUTAB1");
+            MENUTAB2 = texts.getString("MENUTAB2");
+            MENUNW = texts.getString("MENUNW");
+            MENULG = texts.getString("MENULG");
+            MENUSG = texts.getString("MENUSG");
+            MENUSL = texts.getString("MENUSL");
+            MENUEX = texts.getString("MENUEX");
+            MENUCLRS = texts.getString("MENUCLRS");
+            MENUABT = texts.getString("MENUABT");
+            BTMARK = texts.getString("BTMARK");
+            BTRST = texts.getString("BTRST");
+            TXTTM = texts.getString("TXTTM");
+            TXTPTS = texts.getString("TXTPTS");
         } catch(Exception e) {
             System.out.println("Language file is not found");
         }
+    }
+
+
+    public int getLangBoxIndex() {
+        return LanguageBox.getSelectedIndex();
     }
 }

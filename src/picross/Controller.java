@@ -78,7 +78,9 @@ public class Controller implements ActionListener {
                     int i = Integer.parseInt(commands[1]);
                     int j = Integer.parseInt(commands[2]);
                     view.squareClicked(i, j);
-                case "LanguageBox":
+                case "languageBox":
+                    System.out.println("mark");
+                    view.updateInterface(view.getLangBoxIndex());
                     break;
                 case "New":
                     configureBinaryString(model.Board);
