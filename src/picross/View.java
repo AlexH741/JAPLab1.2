@@ -12,6 +12,8 @@ import java.awt.BorderLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import java.awt.event.KeyEvent;
@@ -32,25 +34,29 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 public class View extends JFrame{
-        private Controller gameController;
-        private Model gameModel;
-        private JTextArea Area1 = new JTextArea(30, 10);
-        private JButton[][] areaButtons = new JButton[5][5];
-        private JCheckBox markButton = new JCheckBox();
-        private boolean[][] userSelected;
-        private boolean[][] userMarked;
+    private Controller gameController;
+    private Model gameModel;
+    private String[] text = {"Mark", "Timer", "Points", "Reset"};
+    private String[] Languages = {"French" , "English", "Vietnamese"};
+    Locale currentLocale;
+    String SYSTEMMESSAGES = "resources";
+    private ResourceBundle texts;
+    private JTextArea Area1 = new JTextArea(30, 10);
+    private JButton[][] areaButtons = new JButton[5][5];
+    private JCheckBox markButton = new JCheckBox();
+    private boolean[][] userSelected;
+    private boolean[][] userMarked;
         //private Boolean[][] selectedButton = new Boolean[5][5];
-        private JButton resetButton;
-        private JTextField TimerBox, PointsBox;
-        private JLabel AreaL[]; 
-        private JLabel AreaT[];
-        private JComboBox<Object> LanguageBox;
-        private Color correctSelected = new Color(0x7CCD7C);
-        private Color correctMarked = new Color(255, 255, 0);
-        private Color incorrectColor = new Color(255, 0, 0);
-
-        JWindow window = new JWindow();
-	    JProgressBar bar;
+    private JButton resetButton;
+    private JTextField TimerBox, PointsBox;
+    private JLabel AreaL[]; 
+    private JLabel AreaT[];
+    private JComboBox<Object> LanguageBox;
+    private Color correctSelected = new Color(0x7CCD7C);
+    private Color correctMarked = new Color(255, 255, 0);
+    private Color incorrectColor = new Color(255, 0, 0);
+    //JWindow window = new JWindow();
+	//JProgressBar bar;
 
     private JMenu Game;
 
@@ -88,6 +94,8 @@ public class View extends JFrame{
 	 */
 	//private ImageIcon newFileImg;
     private ImageIcon newFileImg;
+    private ImageIcon svFileImg;
+    private ImageIcon ldFileImg;
 
     private ImageIcon victoryImage;
 	/**
@@ -120,35 +128,6 @@ public class View extends JFrame{
 	 * menu item to exit application
 	 */
 	private JMenuItem Exit;
-
-        public void SplashScreenW()  {
-		
-            bar = new JProgressBar();
-            window.getContentPane().add(
-            new JLabel(new ImageIcon(""), SwingConstants.CENTER), BorderLayout.CENTER);
-            window.setBounds(0, 0, 300, 300);
-            window.getContentPane().add(bar, BorderLayout.SOUTH);
-            window.setLocationRelativeTo(null);
-            window.setVisible(true);
-            window.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            try {
-                progressBar();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            window.dispose();
-            
-        }
-        
-        private void progressBar() throws InterruptedException {
-            bar.setValue(10);
-            bar.setStringPainted(true);
-            int counter = 1;
-            while(counter <= 100) {
-                bar.setValue(counter++);
-                Thread.sleep(1); //COMABACVK
-            }
-        }  
 
     View(Model gameModel) {
         splashScreen();
@@ -210,15 +189,15 @@ public class View extends JFrame{
         right.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel timerLabel = new JLabel("Timer: ");
+        JLabel timerLabel = new JLabel(text[1]+": ");
         TimerBox = new JTextField("00:00");
         TimerBox.setEditable(false);
 
-        JLabel pointsLabel = new JLabel("Points: ");
+        JLabel pointsLabel = new JLabel(text[2]+": ");
         PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
         
-        resetButton = new JButton("Reset");
+        resetButton = new JButton(text[3]);
         
 		JScrollPane textArea1 = new JScrollPane(Area1);  
 		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -257,7 +236,6 @@ public class View extends JFrame{
         top.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        String[] Languages = {"French" , "English", "Vietnamese"};
 
         markButton = new JCheckBox("Mark");
 
@@ -477,6 +455,7 @@ public class View extends JFrame{
     public void changeColor(int x, int y, Color c) {
         areaButtons[x][y].setBackground(c);
     }
+
     public void changeLabelText(boolean[][] board, int x, int y) {
         for(int i = 0; i < x; i++) {
             String text = "";
@@ -530,6 +509,34 @@ public class View extends JFrame{
             num = 0;
             //text = text + text.substring(0, text.length() -2);
             AreaL[i].setText(text);
+        }
+    }
+
+    public void updateInterface(int langIndex) {
+        String lang = "";
+        String country = "";
+        switch(langIndex) {
+            case 0:
+                lang = "en";
+                country = "US";
+                break;
+            case 1:
+                lang = "fr";
+                country = "FR";
+                break;
+        }
+        try { //TODO change resource language files to conform with what we need.
+            currentLocale = new Locale.Builder().setLanguage(lang).setRegion(country).build();
+            texts = ResourceBundle.getBundle(SYSTEMMESSAGES, currentLocale);
+            text[0] = texts.getString("MARK");
+            text[1] = texts.getString("TIMER");
+            text[2] = texts.getString("POINTS");
+            text[3] = texts.getString("RESET");
+            //Languages[0] = LANG1;
+            //Languages[1] = LANG2; 
+            //Languages[2] = LANG3;  
+        } catch(Exception e) {
+            System.out.println("Language file is not found");
         }
     }
 }
