@@ -33,6 +33,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
+
 public class View extends JFrame{
     private Controller gameController;
     private Model gameModel;
@@ -46,7 +47,6 @@ public class View extends JFrame{
     private JCheckBox markButton = new JCheckBox();
     private boolean[][] userSelected;
     private boolean[][] userMarked;
-        //private Boolean[][] selectedButton = new Boolean[5][5];
     private JButton resetButton;
     private JTextField TimerBox, PointsBox;
     private JLabel AreaL[]; 
@@ -55,8 +55,7 @@ public class View extends JFrame{
     private Color correctSelected = new Color(0x7CCD7C);
     private Color correctMarked = new Color(255, 255, 0);
     private Color incorrectColor = new Color(255, 0, 0);
-    //JWindow window = new JWindow();
-	//JProgressBar bar;
+    
 
     private JMenu Game;
 
@@ -129,6 +128,12 @@ public class View extends JFrame{
 	 */
 	private JMenuItem Exit;
 
+    /**
+     * Creates the view for the Picross game. 
+     * The game model must be passed.
+     * 
+     * @param gameModel
+     */
     View(Model gameModel) {
         splashScreen();
         this.gameModel = gameModel;
@@ -171,6 +176,16 @@ public class View extends JFrame{
 		frame.setVisible(true);
     }
     
+    /**
+     * Creates the components for the left side of the Picross game.
+     * The JPanel that will hold the components must be passed in.(param left)
+     * The required amount of hint labels must be passed in.(param y)
+     * All components will adhere to BorderLayout.LINE_START
+     * 
+     * @param left
+     * @param y
+     * @return Left side components of picross game
+     */
     private JPanel createLeftPanel(JPanel left, int y) {
         left.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -185,6 +200,14 @@ public class View extends JFrame{
         return left;
     }
 
+    /**
+     * Creates the components for the right side of the Picross game.
+     * The JPanel that will hold the components must be passed in.(param right)
+     * All components will adhere to BorderLayout.LINE_END
+     * 
+     * @param right
+     * @return Left side components of picross game
+     */
     private JPanel createRightPanel(JPanel right) {
         right.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -232,6 +255,16 @@ public class View extends JFrame{
         return right;
     }
 
+    /**
+     * Creates the components for the top side of the Picross game.
+     * The JPanel that will hold the components must be passed in.(param top)
+     * The required amount of hint labels must be⌈ passed in.(param x)
+     * All components will adhere to BorderLayout.PAGE_START
+     * 
+     * @param top
+     * @param x
+     * @return Top side components of picross game
+     */
     private JPanel createTopPanel(JPanel top, int x) {
         top.setLayout(new GridBagLayout());
 
@@ -257,6 +290,18 @@ public class View extends JFrame{
         return top;
     }
 
+    /**
+     * Creates the button components for the Picross game.
+     * The JPanel that will hold the button components must be passed in.(param buttons)
+     * The horizontal quantity of buttons required must be passed in.(param x)
+     * The vertical quantity of buttons required must be passed in.(param y)
+     * All buttons components will adhere to GridLayout and BorderLayout.PAGE_CENTER
+     * 
+     * @param buttons
+     * @param x
+     * @param y
+     * @return Button components of picross game
+     */
     private JPanel createButtons(JPanel buttons, int x, int y) {
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
@@ -268,6 +313,11 @@ public class View extends JFrame{
         return buttons;
     }
 
+    /**
+     * Creates the menu bar for the picross game
+     * 
+     * @return A Menu Bar
+     */
     private JMenuBar createMenuBar() {
         menuBar = new JMenuBar();
 
@@ -315,6 +365,13 @@ public class View extends JFrame{
         return menuBar;
     }
 
+    /**
+     * Creates GridBagConstraints
+     * 
+     * @param x
+     * @param y
+     * @return GridBagConstraints
+     */
     private GridBagConstraints createGbc(int x, int y) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -351,6 +408,12 @@ public class View extends JFrame{
         Area1.setText(Area1.getText() + text );
     }
 
+    /**
+     * Creates a new line of text inside the event log of the picross game
+     * The desired text to be printed must be passed in.(param text) 
+     * 
+     * @param text
+     */
     public void createLogTextNL(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
         System.out.println("New Line");
@@ -359,7 +422,10 @@ public class View extends JFrame{
     public void createLogText(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
     }
-
+    
+    /**
+     * Adds a controller to each component that requires one. 
+     */
     private void addController() {
         resetButton.setActionCommand("resetButton");
         resetButton.addActionListener(gameController);
@@ -377,7 +443,15 @@ public class View extends JFrame{
         saveGame.addActionListener(gameController);
 
     }
-
+    
+    /**
+     * Sets values of two arrays based on what button component has been clicked.
+     * The vertical position of the button components must be passed in. (param i)
+     * The horizontal position of the button components must be passed in. (param j)
+     * 
+     * @param i
+     * @param j
+     */
     public void squareClicked(int i, int j) {
         if (gameModel.Board[i][j] && !markButton.isSelected()) {// correct guess of occupied pattern space
             changeColor(i, j, correctSelected);// green
