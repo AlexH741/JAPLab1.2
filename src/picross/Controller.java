@@ -78,6 +78,7 @@ public class Controller implements ActionListener {
                     int i = Integer.parseInt(commands[1]);
                     int j = Integer.parseInt(commands[2]);
                     view.squareClicked(i, j);
+                    break;
                 case "languageBox":
                     System.out.println("mark");
                     view.updateInterface(view.getLangBoxIndex());
@@ -99,6 +100,8 @@ public class Controller implements ActionListener {
                     view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);
                     break;
                 case "saveGame":
+                    break;
+                case "configureClient":
                     break;
             }
         }

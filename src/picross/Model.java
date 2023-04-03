@@ -28,6 +28,14 @@ public class Model {
     private JComboBox<Object> LanguageBox;
     public int test = 100;
 
+    private static final String PROTOCOL_SEPARATOR = ""; //TODO give defaults
+    private static final String PROTOCOL_END = "";
+    private static final String PROTOCOL_SENDGAME = "";
+    private static final String PROTOCOL_RECVGAME = "";
+    private static final String PROTOCOL_DATA = "";
+    private static final String FIELD_SEPARATOR = "";
+
+
     public boolean[][] Board = new boolean[DimensionX][DimensionY];
     Model() {
 

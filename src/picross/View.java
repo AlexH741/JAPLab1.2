@@ -39,7 +39,7 @@ public class View extends JFrame{
     private Model gameModel;
     private String myLang;
     private int langIndex = 0;
-    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUNW, MENULG, MENUSG, MENUSL, MENUEX, MENUCLRS, MENUABT, BTMARK, BTRST, TXTTM, TXTPTS;
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX, MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
     private String[] text = {"Mark", "Timer", "Points", "Reset"};
     private String LANG1, LANG2, LANG3;
     private String[] Languages = {LANG1, LANG2, LANG3};
@@ -64,8 +64,13 @@ public class View extends JFrame{
     private JMenu Game;
 
     private JMenu Help;
+
+    private JMenu Client;
+
     private JMenuItem loadGame;
     private JMenuItem saveGame;
+
+    private JMenuItem ClientConfig;
 
     /**
 	 * The JMenuItem to indicate weather the user wants to see the solution to the current match
@@ -328,6 +333,7 @@ public class View extends JFrame{
 
         Game = new JMenu(MENUTAB1);
         Help = new JMenu(MENUTAB2);
+        Client = new JMenu(MENUTAB3);
 
         New = new JMenuItem(MENUNW, newFileImg); 
 		New.setAccelerator(keyNew);
@@ -351,6 +357,8 @@ public class View extends JFrame{
         About = new JMenuItem(MENUABT);
         About.setIcon(abtFileImg);
 
+        ClientConfig = new JMenuItem(MENUCFGC);
+
         newConnect = new JMenuItem("New Connection");
 		disconnect = new JMenuItem("Disconnect");
         disconnect.setEnabled(false);
@@ -364,8 +372,11 @@ public class View extends JFrame{
         Help.add(Colors);
         Help.add(About);
 
+        Client.add(ClientConfig);
+
         menuBar.add(Game);
         menuBar.add(Help);
+        menuBar.add(Client);
 
         return menuBar;
     }
@@ -626,6 +637,7 @@ public class View extends JFrame{
             BUTCANCEL = texts.getString("BUTCANCEL");
             MENUTAB1 = texts.getString("MENUTAB1");
             MENUTAB2 = texts.getString("MENUTAB2");
+            MENUTAB3 = texts.getString("MENUTAB3");
             MENUNW = texts.getString("MENUNW");
             MENULG = texts.getString("MENULG");
             MENUSG = texts.getString("MENUSG");
@@ -633,6 +645,7 @@ public class View extends JFrame{
             MENUEX = texts.getString("MENUEX");
             MENUCLRS = texts.getString("MENUCLRS");
             MENUABT = texts.getString("MENUABT");
+            MENUCFGC = texts.getString("MENUCFGC");
             BTMARK = texts.getString("BTMARK");
             BTRST = texts.getString("BTRST");
             TXTTM = texts.getString("TXTTM");

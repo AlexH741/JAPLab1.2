@@ -1,12 +1,12 @@
 .\src\picross\Model.java:38: warning: no description for @param
     * @param filename
       ^
-.\src\picross\View.java:421: warning: no description for @param
+.\src\picross\View.java:420: warning: no description for @param
      * @param text
        ^
-.\src\picross\View.java:460: warning: no description for @param
+.\src\picross\View.java:459: warning: no description for @param
      * @param i
        ^
-.\src\picross\View.java:461: warning: no description for @param
+.\src\picross\View.java:460: warning: no description for @param
      * @param j
        ^
