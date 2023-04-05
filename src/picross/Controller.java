@@ -85,7 +85,7 @@ public class Controller implements ActionListener {
                     break;
                 case "New":
                     configureBinaryString(model.Board);
-                    view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);  
+                    view.changeLabelText(model.Board, model.DimensionX, model.DimensionY);
                     break;
                 case "Solution":
                     break;
@@ -102,6 +102,24 @@ public class Controller implements ActionListener {
                 case "saveGame":
                     break;
                 case "configureClient":
+                    view.configScreen();
+                    break;
+                case "connectGame":
+                    String info[] = view.retrieveConnectionInfo();
+                    model.connectServer(info[0], info[1], info[2]);
+                    break;
+                case "endConnection":
+                    break;
+                case "newNetGame": // Creates a new game
+                    break;
+                case "sendNetGame": //
+                    model.sendGame();
+                    break;
+                case "recieveNetGame":
+                    break;
+                case "sendData":
+                    break;
+                case "playButton":
                     break;
             }
         }

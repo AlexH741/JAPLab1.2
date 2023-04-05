@@ -33,16 +33,16 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
-
-public class View extends JFrame{
+public class View extends JFrame {
     private Controller gameController;
     private Model gameModel;
     private String myLang;
     private int langIndex = 0;
-    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX, MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
-    private String[] text = {"Mark", "Timer", "Points", "Reset"};
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+    private String[] text = { "Mark", "Timer", "Points", "Reset" };
     private String LANG1, LANG2, LANG3;
-    private String[] Languages = {LANG1, LANG2, LANG3};
+    private String[] Languages = { LANG1, LANG2, LANG3 };
     private Locale currentLocale;
     private String SYSTEMMESSAGES = "resources/texts";
     private ResourceBundle texts;
@@ -53,13 +53,18 @@ public class View extends JFrame{
     private boolean[][] userMarked;
     private JButton resetButton;
     private JTextField TimerBox, PointsBox;
-    private JLabel AreaL[]; 
+    private JLabel AreaL[];
     private JLabel AreaT[];
     private JComboBox<Object> LanguageBox;
     private Color correctSelected = new Color(0x7CCD7C);
     private Color correctMarked = new Color(255, 255, 0);
     private Color incorrectColor = new Color(255, 0, 0);
-    
+    private int portnum = 4321;
+    private String hostname = "localhost";
+    private String username = "client";
+    private JButton connectButton, endButton, newNetGameButton, sendNetGameButton, recieveNetGameButton, sendDataButton,
+            playButton;
+    private JTextArea usertext, usertextarea, servertext, servertextarea, porttext, porttextarea;
 
     private JMenu Game;
 
@@ -73,72 +78,75 @@ public class View extends JFrame{
     private JMenuItem ClientConfig;
 
     /**
-	 * The JMenuItem to indicate weather the user wants to see the solution to the current match
-	 */
-	private JMenuItem Solution;
-	/**
-	 * The JMenuItem to indicate weather the user wants to start a new game
-	 */
-	private JMenuItem New;
+     * The JMenuItem to indicate weather the user wants to see the solution to the
+     * current match
+     */
+    private JMenuItem Solution;
     /**
-	 * The JMenuItem to indicate weather the user wants to run debug senario 3 of the program
-	 */
-	private JMenuItem newConnect;
-	/**
-	 * The JMenuItem to indicate weather the user wants to run debug senario 3 of the program
-	 */
-	private JMenuItem disconnect;
+     * The JMenuItem to indicate weather the user wants to start a new game
+     */
+    private JMenuItem New;
+    /**
+     * The JMenuItem to indicate weather the user wants to run debug senario 3 of
+     * the program
+     */
+    private JMenuItem newConnect;
+    /**
+     * The JMenuItem to indicate weather the user wants to run debug senario 3 of
+     * the program
+     */
+    private JMenuItem disconnect;
 
     /**
-	 * The shortcut key for the solution JMenuItem (ALT+S)
-	 */
-	private final KeyStroke keySolution = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK);
+     * The shortcut key for the solution JMenuItem (ALT+S)
+     */
+    private final KeyStroke keySolution = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK);
     /**
-	 * The shortcut key for the new JMenuItem (CRTL+N)
-	 */
-	private final KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK);
+     * The shortcut key for the new JMenuItem (CRTL+N)
+     */
+    private final KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK);
     /**
-	 * Icon image for nw JMenuItem
-	 */
-	//private ImageIcon newFileImg;
+     * Icon image for nw JMenuItem
+     */
+    // private ImageIcon newFileImg;
     private ImageIcon newFileImg;
     private ImageIcon svFileImg;
     private ImageIcon ldFileImg;
 
     private ImageIcon victoryImage;
-	/**
-	 * Icon image for exit JMenuItem
-	 */
-	private ImageIcon extFileImg;
-	
-	/**
-	 * Icon image for solution JMenuItem
-	 */
-	private ImageIcon solFileImg;
+    /**
+     * Icon image for exit JMenuItem
+     */
+    private ImageIcon extFileImg;
+
+    /**
+     * Icon image for solution JMenuItem
+     */
+    private ImageIcon solFileImg;
 
     private ImageIcon abtFileImg;
 
     private ImageIcon clrFileImg;
-	
-	/**
-	 * The main menu bar for the user
-	 */
-	private JMenuBar menuBar;
-
-    private JMenuItem Colors;
-	
-	/**
-	 * menu item to display programmer information
-	 */
-	private JMenuItem About;
-	
-	/**
-	 * menu item to exit application
-	 */
-	private JMenuItem Exit;
 
     /**
-     * Creates the view for the Picross game. 
+     * The main menu bar for the user
+     */
+    private JMenuBar menuBar;
+
+    private JMenuItem Colors;
+
+    /**
+     * menu item to display programmer information
+     */
+    private JMenuItem About;
+
+    /**
+     * menu item to exit application
+     */
+    private JMenuItem Exit;
+
+    /**
+     * Creates the view for the Picross game.
      * The game model must be passed.
      * 
      * @param gameModel
@@ -146,7 +154,7 @@ public class View extends JFrame{
     View(Model gameModel) {
         splashScreen();
         this.gameModel = gameModel;
-        //gameController = new Controller(this.gameModel, this);
+        // gameController = new Controller(this.gameModel, this);
         AreaL = new JLabel[gameModel.DimensionY];
         AreaT = new JLabel[gameModel.DimensionX];
         userSelected = new boolean[gameModel.DimensionX][gameModel.DimensionY];
@@ -163,29 +171,30 @@ public class View extends JFrame{
             System.out.println(e);
         }
 
-	    frame.setBackground(Color.white);
-	    frame.setMinimumSize(new Dimension(900,800));
-	    frame.setResizable(false);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(Color.white);
+        frame.setMinimumSize(new Dimension(900, 800));
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(5,5,5,5));
-		JPanel textRightPanel = new JPanel();
-		JPanel textLeftPanel = new JPanel();
-		JPanel textTopPanel = new JPanel();
-        
+        JPanel buttonPanel = new JPanel(new GridLayout(5, 5, 5, 5));
+        JPanel textRightPanel = new JPanel();
+        JPanel textLeftPanel = new JPanel();
+        JPanel textTopPanel = new JPanel();
+
         frame.add(BorderLayout.LINE_START, createLeftPanel(textLeftPanel, this.gameModel.DimensionY));
         frame.add(BorderLayout.LINE_END, createRightPanel(textRightPanel));
         frame.add(BorderLayout.PAGE_START, createTopPanel(textTopPanel, this.gameModel.DimensionX));
-        frame.add(BorderLayout.CENTER, createButtons(buttonPanel, this.gameModel.DimensionX, this.gameModel.DimensionY));
+        frame.add(BorderLayout.CENTER,
+                createButtons(buttonPanel, this.gameModel.DimensionX, this.gameModel.DimensionY));
         frame.setJMenuBar(createMenuBar());
         gameController = new Controller(this.gameModel, this);
         addController();
         gameModel.saveGame("text.txt");
 
         frame.pack();
-		frame.setVisible(true);
+        frame.setVisible(true);
     }
-    
+
     /**
      * Creates the components for the left side of the Picross game.
      * The JPanel that will hold the components must be passed in.(param left)
@@ -202,7 +211,7 @@ public class View extends JFrame{
         c.fill = GridBagConstraints.RELATIVE;
         c.ipadx = 50;
         c.ipady = 125;
-        for (int i =0; i < y; i++) {
+        for (int i = 0; i < y; i++) {
             AreaL[i] = new JLabel("test");
             c.gridy = i;
             left.add(AreaL[i], c);
@@ -222,23 +231,23 @@ public class View extends JFrame{
         right.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel timerLabel = new JLabel(TXTTM+": ");
+        JLabel timerLabel = new JLabel(TXTTM + ": ");
         TimerBox = new JTextField("00:00");
         TimerBox.setEditable(false);
 
-        JLabel pointsLabel = new JLabel(TXTPTS+": ");
+        JLabel pointsLabel = new JLabel(TXTPTS + ": ");
         PointsBox = new JTextField("0");
         PointsBox.setEditable(false);
-        
+
         resetButton = new JButton(text[3]);
-        
-		JScrollPane textArea1 = new JScrollPane(Area1);  
-		textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JScrollPane textArea1 = new JScrollPane(Area1);
+        textArea1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Area1.setEditable(false);
 
         c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;        
-        //right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        // right.add(new JLabel(new ImageIcon("bin/PICROSS1.png")), c);
         right.add(new JLabel(new ImageIcon("imgfolder/PICROSS1.png")), c);
 
         c.gridwidth = GridBagConstraints.RELATIVE;
@@ -249,7 +258,7 @@ public class View extends JFrame{
         right.add(TimerBox, c);
 
         c.weightx = 0;
-		    right.add(textArea1, c);
+        right.add(textArea1, c);
 
         c.fill = GridBagConstraints.RELATIVE;
         c.gridy = 3;
@@ -283,16 +292,16 @@ public class View extends JFrame{
         markButton = new JCheckBox(BTMARK);
 
         LanguageBox = new JComboBox<Object>(Languages);
-		LanguageBox.setSelectedIndex(0);
+        LanguageBox.setSelectedIndex(0);
 
         c.ipady = 50;
         double var = 0.1;
         GridBagConstraints t = createGbc(0, 0);
-		top.add(markButton, t);
+        top.add(markButton, t);
 
-        for (int i =0; i < x; i++) {
+        for (int i = 0; i < x; i++) {
             AreaT[i] = new JLabel("test");
-            t = createGbc(i+1, 0);
+            t = createGbc(i + 1, 0);
             t.weightx = var;
             top.add(AreaT[i], t);
         }
@@ -302,7 +311,8 @@ public class View extends JFrame{
 
     /**
      * Creates the button components for the Picross game.
-     * The JPanel that will hold the button components must be passed in.(param buttons)
+     * The JPanel that will hold the button components must be passed in.(param
+     * buttons)
      * The horizontal quantity of buttons required must be passed in.(param x)
      * The vertical quantity of buttons required must be passed in.(param y)
      * All buttons components will adhere to GridLayout and BorderLayout.PAGE_CENTER
@@ -313,13 +323,13 @@ public class View extends JFrame{
      * @return Button components of picross game
      */
     private JPanel createButtons(JPanel buttons, int x, int y) {
-		for (int i = 0; i < x; i++) {
-			for (int j = 0; j < y; j++) {
-				areaButtons[i][j] = new JButton();
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                areaButtons[i][j] = new JButton();
                 areaButtons[i][j].setBackground(new Color(150, 150, 150));
-				buttons.add(areaButtons[i][j]);
-			}
-		}
+                buttons.add(areaButtons[i][j]);
+            }
+        }
         return buttons;
     }
 
@@ -335,21 +345,21 @@ public class View extends JFrame{
         Help = new JMenu(MENUTAB2);
         Client = new JMenu(MENUTAB3);
 
-        New = new JMenuItem(MENUNW, newFileImg); 
-		New.setAccelerator(keyNew);
-		New.setMnemonic(KeyEvent.VK_N);
-		New.setActionCommand(MENUNW);
+        New = new JMenuItem(MENUNW, newFileImg);
+        New.setAccelerator(keyNew);
+        New.setMnemonic(KeyEvent.VK_N);
+        New.setActionCommand(MENUNW);
 
         loadGame = new JMenuItem(MENULG);
 
         saveGame = new JMenuItem(MENUSG);
-		
-        Solution  = new JMenuItem(MENUSL);
+
+        Solution = new JMenuItem(MENUSL);
         Solution.setAccelerator(keySolution);
         Solution.setIcon(solFileImg);
 
         Exit = new JMenuItem(MENUEX);
-        Exit.setIcon(extFileImg); 
+        Exit.setIcon(extFileImg);
 
         Colors = new JMenuItem(MENUCLRS);
         Colors.setIcon(clrFileImg);
@@ -360,7 +370,7 @@ public class View extends JFrame{
         ClientConfig = new JMenuItem(MENUCFGC);
 
         newConnect = new JMenuItem("New Connection");
-		disconnect = new JMenuItem("Disconnect");
+        disconnect = new JMenuItem("Disconnect");
         disconnect.setEnabled(false);
 
         Game.add(New);
@@ -395,10 +405,10 @@ public class View extends JFrame{
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbc.ipady = 50;
-  
-        //gbc.anchor = (x == 0) ? GridBagConstraints.WEST : GridBagConstraints.EAST;
-        //gbc.fill = (x == 0) ? GridBagConstraints.BOTH : GridBagConstraints.HORIZONTAL;
 
+        // gbc.anchor = (x == 0) ? GridBagConstraints.WEST : GridBagConstraints.EAST;
+        // gbc.fill = (x == 0) ? GridBagConstraints.BOTH :
+        // GridBagConstraints.HORIZONTAL;
 
         if (x == 0) {
             gbc.fill = GridBagConstraints.BOTH;
@@ -413,20 +423,20 @@ public class View extends JFrame{
         } else {
             gbc.weightx = 1.0;
         }
-  
-        //gbc.insets = (x == 0) ? WEST_INSETS : EAST_INSETS;
-        //gbc.weightx = (x == 0) ? 0.1 : 1.0;
-        //gbc.weighty = 1.0;
+
+        // gbc.insets = (x == 0) ? WEST_INSETS : EAST_INSETS;
+        // gbc.weightx = (x == 0) ? 0.1 : 1.0;
+        // gbc.weighty = 1.0;
         return gbc;
     }
 
     public void createLogTextNNL(String text) {
-        Area1.setText(Area1.getText() + text );
+        Area1.setText(Area1.getText() + text);
     }
 
     /**
      * Creates a new line of text inside the event log of the picross game
-     * The desired text to be printed must be passed in.(param text) 
+     * The desired text to be printed must be passed in.(param text)
      * 
      * @param text
      */
@@ -438,9 +448,9 @@ public class View extends JFrame{
     public void createLogText(String text) {
         Area1.setText(Area1.getText() + "\n" + text);
     }
-    
+
     /**
-     * Adds a controller to each component that requires one. 
+     * Adds a controller to each component that requires one.
      */
     private void addController() {
         LanguageBox.setActionCommand("languageBox");
@@ -459,9 +469,24 @@ public class View extends JFrame{
         loadGame.addActionListener(gameController);
         saveGame.setActionCommand("saveGame");
         saveGame.addActionListener(gameController);
-
+        ClientConfig.setActionCommand("configureClient");
+        ClientConfig.addActionListener(gameController);
+        connectButton.setActionCommand("connectGame");
+        connectButton.addActionListener(gameController);
+        endButton.setActionCommand("endConnection");
+        endButton.addActionListener(gameController);
+        newNetGameButton.setActionCommand("newNetGame");
+        newNetGameButton.addActionListener(gameController);
+        sendNetGameButton.setActionCommand("sendNetGame");
+        sendNetGameButton.addActionListener(gameController);
+        recieveNetGameButton.setActionCommand("recieveNetGame");
+        recieveNetGameButton.addActionListener(gameController);
+        sendDataButton.setActionCommand("sendData");
+        sendDataButton.addActionListener(gameController);
+        playButton.setActionCommand("playButton");
+        playButton.addActionListener(gameController);
     }
-    
+
     /**
      * Sets values of two arrays based on what button component has been clicked.
      * The vertical position of the button components must be passed in. (param i)
@@ -518,7 +543,7 @@ public class View extends JFrame{
         button.setIcon(victoryImage);
         victoryPanel.add(button, BorderLayout.CENTER);
         JFrame victoryFrame = new JFrame();
-        victoryFrame.setMinimumSize(new Dimension(748,343));
+        victoryFrame.setMinimumSize(new Dimension(748, 343));
         victoryFrame.add(victoryPanel);
         victoryFrame.setVisible(true);
     }
@@ -532,17 +557,60 @@ public class View extends JFrame{
         button.setIcon(victoryImage);
         victoryPanel.add(button, BorderLayout.CENTER);
         JFrame victoryFrame = new JFrame();
-        victoryFrame.setMinimumSize(new Dimension(748,343));
+        victoryFrame.setMinimumSize(new Dimension(748, 343));
         victoryFrame.add(victoryPanel);
         victoryFrame.setVisible(true);
         try {
             Thread.sleep(3000);
-        } catch (Exception e){
+        } catch (Exception e) {
         }
         victoryFrame.setVisible(false);
     }
 
-    public boolean isButton(ActionEvent e, int x , int y) {
+    public void configScreen() {
+        JPanel configPanel = new JPanel();
+        GridBagConstraints gbc = new GridBagConstraints();
+        // BorderLayout layout = new BorderLayout();
+        // configPanel.setLayout(gbc);
+        usertext = new JTextArea("User:");
+        usertextarea = new JTextArea(username);
+        servertext = new JTextArea("Server:");
+        servertextarea = new JTextArea(hostname);
+        porttext = new JTextArea("Port:");
+        porttextarea = new JTextArea("" + portnum);
+        usertext.setEditable(false);
+        servertext.setEditable(false);
+        porttext.setEditable(false);
+
+        connectButton = new JButton("Connect");
+        endButton = new JButton("End");
+        newNetGameButton = new JButton("New game");
+        sendNetGameButton = new JButton("Send game");
+        recieveNetGameButton = new JButton("Recieve game");
+        sendDataButton = new JButton("Send data");
+        playButton = new JButton("Play");
+
+        configPanel.add(usertext);
+        configPanel.add(usertextarea);
+        configPanel.add(servertext);
+        configPanel.add(servertextarea);
+        configPanel.add(porttext);
+        configPanel.add(porttextarea);
+        configPanel.add(connectButton);
+        configPanel.add(endButton);
+        configPanel.add(newNetGameButton);
+        configPanel.add(sendNetGameButton);
+        configPanel.add(recieveNetGameButton);
+        configPanel.add(sendDataButton);
+        configPanel.add(playButton);
+
+        JFrame configFrame = new JFrame();
+        configFrame.setMinimumSize(new Dimension(600, 300));
+        configFrame.add(configPanel);
+        configFrame.setVisible(true);
+    }
+
+    public boolean isButton(ActionEvent e, int x, int y) {
         return e.getSource().equals(areaButtons[x][y]);
     }
 
@@ -551,31 +619,31 @@ public class View extends JFrame{
     }
 
     public void changeLabelText(boolean[][] board, int x, int y) {
-        for(int i = 0; i < x; i++) {
+        for (int i = 0; i < x; i++) {
             String text = "";
             int num = 0;
             for (int j = 0; j < y; j++) {
-                if (board[j][i]) {// if position has 1 
+                if (board[j][i]) {// if position has 1
                     System.out.println(num);
-                    num++; //increment number
+                    num++; // increment number
                 } else if (!board[j][i] && num != 0) { // if position isn't occupied
-                        System.out.println(text + Integer.toString(num) + " ");
-                        text = text + Integer.toString(num) + " ";// add 
-                    
-                    num = 0; 
-                } else if (j+1 == y && text == "") {
+                    System.out.println(text + Integer.toString(num) + " ");
+                    text = text + Integer.toString(num) + " ";// add
+
+                    num = 0;
+                } else if (j + 1 == y && text == "") {
                     text = "0";
                 }
             }
             if (num > 0) {
                 System.out.println(text + Integer.toString(num));
-                        text = text + Integer.toString(num);
-            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0 ) {
-                //text = text + "mark";
+                text = text + Integer.toString(num);
+            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0) {
+                // text = text + "mark";
                 text = text + text.substring(0, text.length() - 2);
             }
             num = 0;
-            //text = text + text.substring(0, text.length() -2);
+            // text = text + text.substring(0, text.length() -2);
             AreaT[i].setText(text);
         }
         for (int i = 0; i < y; i++) {
@@ -586,22 +654,22 @@ public class View extends JFrame{
                     System.out.println(num);
                     num++;
                 } else if (!board[i][j] && num > 0) {
-                        System.out.println(text + Integer.toString(num) + " ");
-                        text = text + Integer.toString(num) + " ";
-                    
-                    num = 0; 
-                } else if (j+1 == y && text == "") {
+                    System.out.println(text + Integer.toString(num) + " ");
+                    text = text + Integer.toString(num) + " ";
+
+                    num = 0;
+                } else if (j + 1 == y && text == "") {
                     text = "0";
                 }
             }
             if (num > 0) {
                 System.out.println(text + Integer.toString(num));
-                        text = text + Integer.toString(num);
-            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0 ) {
+                text = text + Integer.toString(num);
+            } else if ((text.length() % 2 == 0) && text.length() % 3 == 0) {
                 text = text + text.substring(0, text.length() - 2);
             }
             num = 0;
-            //text = text + text.substring(0, text.length() -2);
+            // text = text + text.substring(0, text.length() -2);
             AreaL[i].setText(text);
         }
     }
@@ -610,7 +678,7 @@ public class View extends JFrame{
         System.out.println("");
         String lang = "";
         String country = "";
-        switch(langIndex) {
+        switch (langIndex) {
             case 0:
                 lang = "en";
                 country = "US";
@@ -622,8 +690,8 @@ public class View extends JFrame{
                 System.out.println(country);
                 break;
         }
-         
-        try { //TODO change resource language files to conform with what we need.
+
+        try {
             currentLocale = new Locale.Builder().setLanguage(lang).setRegion(country).build();
             texts = ResourceBundle.getBundle(SYSTEMMESSAGES, currentLocale);
             TITLE = texts.getString("TITLE");
@@ -631,8 +699,8 @@ public class View extends JFrame{
             LANG2 = texts.getString("LANG2");
             LANG3 = texts.getString("LANG3");
             Languages[0] = LANG1;
-            Languages[1] = LANG2; 
-            Languages[2] = LANG3;  
+            Languages[1] = LANG2;
+            Languages[2] = LANG3;
             BUTOK = texts.getString("BUTOK");
             BUTCANCEL = texts.getString("BUTCANCEL");
             MENUTAB1 = texts.getString("MENUTAB1");
@@ -650,13 +718,23 @@ public class View extends JFrame{
             BTRST = texts.getString("BTRST");
             TXTTM = texts.getString("TXTTM");
             TXTPTS = texts.getString("TXTPTS");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Language file is not found");
         }
     }
 
-
     public int getLangBoxIndex() {
         return LanguageBox.getSelectedIndex();
+    }
+
+    public String[] retrieveConnectionInfo() {
+        String[] info = { "", "", "" };
+        hostname = servertextarea.getText();
+        info[0] = hostname;
+        portnum = Integer.valueOf(porttextarea.getText());
+        info[1] = Integer.toString(portnum);
+        username = usertextarea.getText();
+        info[2] = username;
+        return info;
     }
 }
