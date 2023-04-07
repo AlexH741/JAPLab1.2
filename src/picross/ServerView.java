@@ -1,11 +1,20 @@
 package src.picross;
-import java.awt.GridLayout;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-public class ServerView implements ViewInterface {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ServerView implements ViewInterface, ActionListener {
 private Server server;
 private ViewScene viewScene = new ViewScene();
 private JTextArea textArea = viewScene.getTextArea();
@@ -29,10 +38,44 @@ void writeln() {
 	userText.setText("");
 }
 JFrame frame = new JFrame("ServerView");
-public void createAndShowGUI() {
-	
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+JPanel NorthPanel = new JPanel();
+JPanel CenterPanel = new JPanel();
+JPanel SouthPanel = new JPanel();
+JButton Exbutton = new JButton("Excecute");
+JButton Resultbutton = new JButton("Result");
+JButton Endbutton = new JButton("End");
+JCheckBox finalCheckBox = new JCheckBox();
+JTextField textField = new JTextField();
 
+public void createAndShowGUI() {
+	frame.setTitle("Picross Server");
+	frame.setSize(420,560);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//frame.setResizable(false);
+	ImageIcon serverimage = new ImageIcon("imgfolder/omark.png");
+	frame.setIconImage(serverimage.getImage());
+	frame.getContentPane().setBackground(Color.white);
+	frame.add(NorthPanel,BorderLayout.NORTH);
+	NorthPanel.setBackground(Color.green);
+	NorthPanel.setPreferredSize(new Dimension(100,100));
+	frame.add(CenterPanel,BorderLayout.CENTER);
+	CenterPanel.setBackground(Color.red);
+	CenterPanel.setPreferredSize(new Dimension(100,100));
+	
+	frame.add(SouthPanel,BorderLayout.SOUTH);
+	SouthPanel.setBackground(Color.white);
+	SouthPanel.setPreferredSize(new Dimension(100,100));
+	CenterPanel.add(Exbutton);
+	Exbutton.setPreferredSize(new Dimension(100,50));
+	CenterPanel.add(Resultbutton);
+	Resultbutton.setPreferredSize(new Dimension(100,50));
+	CenterPanel.add(finalCheckBox);
+	finalCheckBox.setPreferredSize(new Dimension(25,25));
+	finalCheckBox.setText("Finalize");
+	CenterPanel.add(Endbutton);
+	Endbutton.setPreferredSize(new Dimension(100,50));
+	SouthPanel.add(textField);
+	textField.setPreferredSize(new Dimension(200,100));
 	viewScene.getSendButton().addActionListener((e) -> {
 		writeln();
 	}
@@ -42,9 +85,6 @@ public void createAndShowGUI() {
 	startServer("10001");
 
 }
-JPanel textRightPanel = new JPanel();
-JPanel textLeftPanel = new JPanel();
-JPanel textTopPanel = new JPanel();
 
 
 
@@ -61,5 +101,11 @@ public void println(String text) {
 @Override
 public void setServer(Server _server) {
 	server = _server;
+}
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
 }
 }
