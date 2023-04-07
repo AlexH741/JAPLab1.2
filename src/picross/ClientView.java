@@ -1,16 +1,14 @@
 package src.picross;
 
-import javafx.application.Application;
-import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
-import view.ViewScene;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+//import ViewScene;
 
-public class ClientView extends Application {
-
+public class ClientView {
 	private Client client;
 	private ViewScene viewScene = new ViewScene();
-	private TextArea textArea = viewScene.getTextArea();
-	private TextArea userText = viewScene.getUserText();
+	private JTextArea textArea = viewScene.getTextArea();
+	private JTextArea userText = viewScene.getUserText();
 	private static int PORT = 3000;
 
 	private void startClient(String arg) {
@@ -22,20 +20,33 @@ public class ClientView extends Application {
 			portNumber = Integer.parseInt(arg);
 		}
 		System.out.println("Starting Server Thread on port " + portNumber);
-		Thread servDaemon = new Thread(new Server(this, portNumber));
+		Thread servDaemon = new Thread(new Server((ViewInterface) this, portNumber));
 		servDaemon.start();
 	}
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		viewScene.getSendButton().setOnAction((e) -> {
+	public void createAndShowGUI() {
+		JFrame frame = new JFrame("ClientView");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		viewScene.getSendButton().addActionListener((e) -> {
 			writeln();
 		});
-		stage.setScene(viewScene.getScene());
-		stage.sizeToScene();
-		startServer("10001");
-		stage.show();
 
+		frame.getContentPane().add(viewScene.getScene());
+		frame.pack();
+		startClient("10001");
+		frame.setVisible(true);
 	}
+
+	private void writeln() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void main(String[] args) {
+		ClientView clientView = new ClientView();
+		clientView.createAndShowGUI();
+	}
+
 
 }
