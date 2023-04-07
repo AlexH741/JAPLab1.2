@@ -103,37 +103,4 @@ public class Model {
             writer.close();
         }
     }
-
-    public void connectServer(String hostname, String portnum, String username) {
-        listenSocket(hostname, portnum);
-        out.println("some text");// TODO change to connection protocol
-        try { // TODO recieve confirmation from server, confirmation will appear as an echo
-            String response = in.readLine();
-            System.out.println("Recieved: " + response);
-        } catch (IOException e) {
-            System.out.println("Read has failed");
-        }
-    }
-
-    public void sendGame() {
-        out.println(""); // TODO change to send game protocol
-        try { // TODO recieve confirmation from server, confirmation will appear as an echo
-            String response = in.readLine();
-            System.out.println("Recieved: " + response);
-        } catch (IOException e) {
-            System.out.println("Read has failed");
-        }
-    }
-
-    private void listenSocket(String hostname, String portnum) {
-        try {
-            socket = new Socket(hostname, Integer.valueOf(portnum));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (UnknownHostException e) {
-            System.out.println("Unknown host: " + hostname);
-        } catch (IOException e) {
-            System.out.println("No I/O");
-        }
-    }
 }

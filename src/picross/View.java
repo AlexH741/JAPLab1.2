@@ -470,21 +470,23 @@ public class View extends JFrame {
         saveGame.setActionCommand("saveGame");
         saveGame.addActionListener(gameController);
         ClientConfig.setActionCommand("configureClient");
-        ClientConfig.addActionListener(gameController);
-        connectButton.setActionCommand("connectGame");
-        connectButton.addActionListener(gameController);
-        endButton.setActionCommand("endConnection");
-        endButton.addActionListener(gameController);
-        newNetGameButton.setActionCommand("newNetGame");
-        newNetGameButton.addActionListener(gameController);
-        sendNetGameButton.setActionCommand("sendNetGame");
-        sendNetGameButton.addActionListener(gameController);
-        recieveNetGameButton.setActionCommand("recieveNetGame");
-        recieveNetGameButton.addActionListener(gameController);
-        sendDataButton.setActionCommand("sendData");
-        sendDataButton.addActionListener(gameController);
-        playButton.setActionCommand("playButton");
-        playButton.addActionListener(gameController);
+        /*
+         * ClientConfig.addActionListener(gameController);
+         * connectButton.setActionCommand("connectGame");
+         * connectButton.addActionListener(gameController);
+         * endButton.setActionCommand("endConnection");
+         * endButton.addActionListener(gameController);
+         * newNetGameButton.setActionCommand("newNetGame");
+         * newNetGameButton.addActionListener(gameController);
+         * sendNetGameButton.setActionCommand("sendNetGame");
+         * sendNetGameButton.addActionListener(gameController);
+         * recieveNetGameButton.setActionCommand("recieveNetGame");
+         * recieveNetGameButton.addActionListener(gameController);
+         * sendDataButton.setActionCommand("sendData");
+         * sendDataButton.addActionListener(gameController);
+         * playButton.setActionCommand("playButton");
+         * playButton.addActionListener(gameController);
+         */
     }
 
     /**
@@ -565,49 +567,6 @@ public class View extends JFrame {
         } catch (Exception e) {
         }
         victoryFrame.setVisible(false);
-    }
-
-    public void configScreen() {
-        JPanel configPanel = new JPanel();
-        GridBagConstraints gbc = new GridBagConstraints();
-        // BorderLayout layout = new BorderLayout();
-        // configPanel.setLayout(gbc);
-        usertext = new JTextArea("User:");
-        usertextarea = new JTextArea(username);
-        servertext = new JTextArea("Server:");
-        servertextarea = new JTextArea(hostname);
-        porttext = new JTextArea("Port:");
-        porttextarea = new JTextArea("" + portnum);
-        usertext.setEditable(false);
-        servertext.setEditable(false);
-        porttext.setEditable(false);
-
-        connectButton = new JButton("Connect");
-        endButton = new JButton("End");
-        newNetGameButton = new JButton("New game");
-        sendNetGameButton = new JButton("Send game");
-        recieveNetGameButton = new JButton("Recieve game");
-        sendDataButton = new JButton("Send data");
-        playButton = new JButton("Play");
-
-        configPanel.add(usertext);
-        configPanel.add(usertextarea);
-        configPanel.add(servertext);
-        configPanel.add(servertextarea);
-        configPanel.add(porttext);
-        configPanel.add(porttextarea);
-        configPanel.add(connectButton);
-        configPanel.add(endButton);
-        configPanel.add(newNetGameButton);
-        configPanel.add(sendNetGameButton);
-        configPanel.add(recieveNetGameButton);
-        configPanel.add(sendDataButton);
-        configPanel.add(playButton);
-
-        JFrame configFrame = new JFrame();
-        configFrame.setMinimumSize(new Dimension(600, 300));
-        configFrame.add(configPanel);
-        configFrame.setVisible(true);
     }
 
     public boolean isButton(ActionEvent e, int x, int y) {
@@ -725,16 +684,5 @@ public class View extends JFrame {
 
     public int getLangBoxIndex() {
         return LanguageBox.getSelectedIndex();
-    }
-
-    public String[] retrieveConnectionInfo() {
-        String[] info = { "", "", "" };
-        hostname = servertextarea.getText();
-        info[0] = hostname;
-        portnum = Integer.valueOf(porttextarea.getText());
-        info[1] = Integer.toString(portnum);
-        username = usertextarea.getText();
-        info[2] = username;
-        return info;
     }
 }
