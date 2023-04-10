@@ -114,7 +114,7 @@ public class ServerView implements ViewInterface, ActionListener {
 		Endbutton.setPreferredSize(new Dimension(100, 50));
 
 		portTextArea.setPreferredSize(new Dimension(100, 20));
-		textAreaServer.setPreferredSize(new Dimension(500, 400));
+		textAreaServer.setPreferredSize(new Dimension(300, 150));
 
 		viewScene.getSendButton().addActionListener((e) -> {
 			writeln();
