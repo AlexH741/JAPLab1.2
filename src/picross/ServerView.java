@@ -80,7 +80,7 @@ public class ServerView implements ViewInterface, ActionListener {
 	JButton Resultbutton = new JButton("Result");
 	JButton Endbutton = new JButton("End");
 	JCheckBox finalCheckBox = new JCheckBox("Finalize");
-	JTextField textField = new JTextField();
+	JTextArea textAreaServer = new JTextArea();
 	JLabel image;
 
 	public void createAndShowGUI() throws IOException {
@@ -109,7 +109,7 @@ public class ServerView implements ViewInterface, ActionListener {
 		buttonPanel.add(Resultbutton);
 		buttonPanel.add(finalCheckBox);
 		buttonPanel.add(Endbutton);
-		CenterPanel.add(textField, BorderLayout.SOUTH);
+		CenterPanel.add(textAreaServer, BorderLayout.SOUTH);
 		CenterPanel.add(buttonPanel, BorderLayout.CENTER);
 
 		// NorthPanel.setBackground(Color.green);
@@ -132,7 +132,7 @@ public class ServerView implements ViewInterface, ActionListener {
 		Endbutton.setPreferredSize(new Dimension(100, 50));
 
 		portTextArea.setPreferredSize(new Dimension(100, 20));
-		textField.setPreferredSize(new Dimension(200, 50));
+		textAreaServer.setPreferredSize(new Dimension(200, 50));
 
 		viewScene.getSendButton().addActionListener((e) -> {
 			writeln();
@@ -159,7 +159,7 @@ public class ServerView implements ViewInterface, ActionListener {
 	@Override
 	public void println(String text) {
 		System.out.println("test server at println serverview");
-		textArea.append(text + "\n");
+		textAreaServer.append(text + "\n");
 	}
 
 	@Override
