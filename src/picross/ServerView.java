@@ -62,20 +62,16 @@ public class ServerView implements ViewInterface, ActionListener {
 		Thread servDaemon = new Thread(new Server(this, portNumber));
 		servDaemon.start();
 	}
-
 	void writeln() {
 		server.writeln(userText.getText());
 		userText.setText("");
 	}
-
 	BufferedImage myPicture;
 	ImageIcon serverimage1 = new ImageIcon("imgfolder/omark.png");
 	ImageIcon serverimage2;
 	JFrame frame = new JFrame("ServerView");
-	// JPanel NorthPanel = new JPanel();
 	JPanel buttonPanel = new JPanel();
 	JPanel CenterPanel = new JPanel();
-	// JPanel SouthPanel = new JPanel();
 	JButton Exbutton = new JButton("Excecute");
 	JButton Resultbutton = new JButton("Result");
 	JButton Endbutton = new JButton("End");
@@ -85,18 +81,14 @@ public class ServerView implements ViewInterface, ActionListener {
 
 	public void createAndShowGUI() throws IOException {
 		myPicture = ImageIO.read(new File("imgfolder/piccross.png"));
-		// image.setIcon(serverimage2.getImage());
 		serverimage2 = new ImageIcon(myPicture);
 		image = new JLabel(serverimage2);
 		portTextArea = new JTextArea();
 		portText = new JLabel("Port:");
 		buttonPanel.setLayout(new FlowLayout());
 		CenterPanel.setLayout(new BorderLayout());
-		// frame.add(NorthPanel,BorderLayout.NORTH);
 		CenterPanel.add(image, BorderLayout.NORTH);
-		// CenterPanel.add(NorthPanel);
 		frame.add(CenterPanel);
-		// frame.add(SouthPane,BorderLayout.SOUTH);
 		buttonPanel.add(portText);
 		buttonPanel.add(portTextArea);
 		buttonPanel.add(Exbutton);
@@ -105,29 +97,19 @@ public class ServerView implements ViewInterface, ActionListener {
 				startServer(portTextArea.getText());
 			}
 		});
-		// LanguageBox.setActionCommand("languageBox");
+		
 		buttonPanel.add(Resultbutton);
 		buttonPanel.add(finalCheckBox);
 		buttonPanel.add(Endbutton);
 		CenterPanel.add(textAreaServer, BorderLayout.SOUTH);
 		CenterPanel.add(buttonPanel, BorderLayout.CENTER);
 
-		// NorthPanel.setBackground(Color.green);
-		// NorthPanel.setPreferredSize(new Dimension(100,100));
-
-		// CenterPanel.setBackground(Color.red);
 		CenterPanel.setPreferredSize(new Dimension(100, 100));
 
-		// SouthPanel.setBackground(Color.white);
-		// SouthPanel.setPreferredSize(new Dimension(100,100));
-		// NorthPanel.setIconImage(serverimage2.getImage());
 
 		Exbutton.setPreferredSize(new Dimension(100, 50));
 
 		Resultbutton.setPreferredSize(new Dimension(100, 50));
-
-		// finalCheckBox.setPreferredSize(new Dimension(25,25));
-		// finalCheckBox.setText("");
 
 		Endbutton.setPreferredSize(new Dimension(100, 50));
 
