@@ -43,6 +43,7 @@ public class Server implements Runnable {
 	 * Default constructor.
 	 */
 	public Server(ViewInterface _view, int portNumber) {
+		System.out.println("test server at server constructor");
 		view = _view;
 		view.setServer(this);
 		try {
@@ -55,6 +56,7 @@ public class Server implements Runnable {
 	}
 
 	public void writeln(String string) {
+		System.out.println("test server at writeln server constructor");
 		int j = 0;
 		for (ListIterator<Worked> i = connections.listIterator(); i.hasNext();) {
 			System.out.println(j++);
@@ -71,6 +73,7 @@ public class Server implements Runnable {
 	}
 
 	private void println(String string) {
+		System.out.println("test server at println server constructor");
 		System.out.println(string);
 		view.println(string);
 	}
@@ -81,6 +84,7 @@ public class Server implements Runnable {
 	 * Run method.
 	 */
 	public void run() {
+		System.out.println("test server at run method server constructor");
 		for (;;) {
 			try {
 				sock = servsock.accept();

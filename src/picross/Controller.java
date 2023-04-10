@@ -102,18 +102,16 @@ public class Controller implements ActionListener {
                 case "saveGame":
                     break;
                 case "configureClient":
-                    // view.configScreen();
+                    view.createClientScreen();
                     break;
                 case "connectGame":
-                    // String info[] = view.retrieveConnectionInfo();
-                    // model.connectServer(info[0], info[1], info[2]);
+                    view.startClient();
                     break;
                 case "endConnection":
                     break;
                 case "newNetGame": // Creates a new game
                     break;
                 case "sendNetGame": //
-                    // model.sendGame();
                     break;
                 case "recieveNetGame":
                     break;
@@ -121,6 +119,7 @@ public class Controller implements ActionListener {
                     break;
                 case "playButton":
                     break;
+
             }
         }
     }

@@ -12,6 +12,9 @@ import java.awt.BorderLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +39,7 @@ import javax.swing.*;
 public class View extends JFrame {
     private Controller gameController;
     private Model gameModel;
+    private ClientView clientView;
     private String myLang;
     private int langIndex = 0;
     private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
@@ -190,6 +194,8 @@ public class View extends JFrame {
         gameController = new Controller(this.gameModel, this);
         addController();
         gameModel.saveGame("text.txt");
+
+        frame.addWindowListener(listener);
 
         frame.pack();
         frame.setVisible(true);
@@ -470,6 +476,7 @@ public class View extends JFrame {
         saveGame.setActionCommand("saveGame");
         saveGame.addActionListener(gameController);
         ClientConfig.setActionCommand("configureClient");
+        ClientConfig.addActionListener(gameController);
         /*
          * ClientConfig.addActionListener(gameController);
          * connectButton.setActionCommand("connectGame");
@@ -685,4 +692,29 @@ public class View extends JFrame {
     public int getLangBoxIndex() {
         return LanguageBox.getSelectedIndex();
     }
+
+    public void createClientScreen() {
+        clientView = new ClientView(gameController);
+    }
+
+    public void startClient() {
+        clientView.startClient(gameModel.getBoard());
+    }
+    /*
+     * public String[] getParameters() {
+     * return clientView.getParameters();
+     * }
+     */
+
+    WindowListener listener = new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            Frame frame = (Frame) evt.getSource();
+            try {
+                clientView.closewindow();
+            } catch (NullPointerException e) {
+                System.out.println("Client has not been created.");
+            }
+            System.out.println("Closing = " + frame.getTitle());
+        }
+    };
 }

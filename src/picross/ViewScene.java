@@ -1,43 +1,59 @@
 package src.picross;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Component;
 
 public class ViewScene {
-	private Scene mainScene;
-	private BorderPane centerPane = new BorderPane();
-	private BorderPane bottomPane = new BorderPane();
-	private TextArea textArea = new TextArea();
-	private TextArea userText = new TextArea();
-	private Button sendButton = new Button("Send");
+	private JFrame mainFrame;
+	private JPanel centerPanel;
+	private JPanel bottomPanel;
+	private JTextArea textArea;
+	private JTextArea userText;
+	private JButton sendButton;
 
 	private void configure() {
-		bottomPane.setCenter(userText);
-		bottomPane.setBottom(sendButton);
-		centerPane.setCenter(textArea);
-		centerPane.setBottom(bottomPane);
-		mainScene = new Scene(centerPane);
+		bottomPanel.add(userText);
+		bottomPanel.add(sendButton);
+		centerPanel.add(textArea);
+		centerPanel.add(bottomPanel);
+		mainFrame.add(centerPanel, BorderLayout.CENTER);
 	}
 
 	public ViewScene() {
+		mainFrame = new JFrame("ViewScene");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		centerPanel = new JPanel();
+		bottomPanel = new JPanel();
+		textArea = new JTextArea();
+		userText = new JTextArea();
+		sendButton = new JButton("Send");
 		configure();
+		mainFrame.pack();
 	}
 
-	public Scene getScene() {
-		return mainScene;
+	public void createAndShowGUI() {
+		mainFrame.setVisible(true);
 	}
 
-	public Button getSendButton() {
+	public JButton getSendButton() {
 		return sendButton;
 	}
 
-	public TextArea getTextArea() {
+	public JTextArea getTextArea() {
 		return textArea;
 	}
 
-	public TextArea getUserText() {
+	public JTextArea getUserText() {
 		return userText;
 	}
+
+	public Component getScene() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

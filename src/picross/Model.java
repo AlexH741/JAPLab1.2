@@ -103,4 +103,19 @@ public class Model {
             writer.close();
         }
     }
+
+    public String getBoard() {
+        String board = "";
+        for (int i = 0; i < this.DimensionX; i++) {
+            for (int j = 0; j < this.DimensionY; j++) {
+                if (Board[i][j]) {
+                    board += "1";
+                } else {
+                    board += "0";
+                }
+            }
+            board += ",";
+        }
+        return board;
+    }
 }
