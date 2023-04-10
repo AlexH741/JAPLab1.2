@@ -162,16 +162,18 @@ public class Server implements Runnable {
 				out.println(clientid);
 				data = in.readLine();
 				poscerq = data.indexOf("#");
-				strcliid = data.substring(0, poscerq);
-				dadosCliente = data.substring(poscerq + 1, data.length());
+			//	strcliid = data.substring(0, poscerq); //process the string
+			//	dadosCliente = data.substring(poscerq + 1, data.length());
+				dadosCliente = data;
 				while (!dadosCliente.equals("end")) {
 					println("Cli[" + strcliid + "]: " + data);
 					out.println("String \"" + data + "\" received.");
 					out.flush();
 					data = in.readLine();
-					poscerq = data.indexOf("#");
-					strcliid = data.substring(0, poscerq);
-					dadosCliente = data.substring(poscerq + 1, data.length());
+					dadosCliente = data;
+					//poscerq = data.indexOf("#");
+					//strcliid = data.substring(0, poscerq);
+				//	dadosCliente = data.substring(poscerq + 1, data.length());
 				}
 				println("Disconecting " + sock.getInetAddress() + "!");
 				nclients -= 1;
