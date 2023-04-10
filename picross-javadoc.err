@@ -1,12 +1,331 @@
-.\src\picross\Model.java:38: warning: no description for @param
-    * @param filename
-      ^
-.\src\picross\View.java:420: warning: no description for @param
+Picked up _JAVA_OPTIONS: -Xmx256M
+Loading source files for package src.picross...
+Constructing Javadoc information...
+Building index for all the packages and classes...
+Standard Doclet version 17.0.6+10
+Building tree for all the packages and classes...
+Generating doc\src\picross\Client.html...
+.\src\picross\Client.java:54: error: @param name not found
+	 * @param args Param arguments.
+	          ^
+.\src\picross\Client.java:57: warning: no @param for port
+	public Client(int port, String hostname, String username, String game) {
+	       ^
+.\src\picross\Client.java:57: warning: no @param for hostname
+	public Client(int port, String hostname, String username, String game) {
+	       ^
+.\src\picross\Client.java:57: warning: no @param for username
+	public Client(int port, String hostname, String username, String game) {
+	       ^
+.\src\picross\Client.java:57: warning: no @param for game
+	public Client(int port, String hostname, String username, String game) {
+	       ^
+.\src\picross\Client.java:94: warning: no comment
+	public void windowclose() {
+	            ^
+Generating doc\src\picross\ClientView.html...
+.\src\picross\ClientView.java:17: warning: no comment
+public class ClientView {
+       ^
+.\src\picross\ClientView.java:133: warning: no comment
+	public void closewindow() {
+	            ^
+.\src\picross\ClientView.java:122: warning: no comment
+	public void startClient(String game) {
+	            ^
+Generating doc\src\picross\Controller.html...
+.\src\picross\Controller.java:16: warning: no comment
+public class Controller implements ActionListener {
+       ^
+Generating doc\src\picross\Game.html...
+.\src\picross\Game.java:14: warning: no comment
+	public static void main(String[] args) {
+	                   ^
+Generating doc\src\picross\Model.html...
+.\src\picross\Model.java:53: warning: no description for @param
+     * @param filename
+       ^
+.\src\picross\Model.java:20: warning: no comment
+public class Model {
+       ^
+.\src\picross\Model.java:44: warning: no comment
+    public boolean[][] Board = new boolean[DimensionX][DimensionY];
+                       ^
+.\src\picross\Model.java:21: warning: no comment
+    public int DimensionX = 5; // 5x5 as default
+               ^
+.\src\picross\Model.java:22: warning: no comment
+    public int DimensionY = 5;
+               ^
+.\src\picross\Model.java:32: warning: no comment
+    public int test = 100;
+               ^
+.\src\picross\Model.java:107: warning: no comment
+    public String getBoard() {
+                  ^
+.\src\picross\Model.java:84: warning: no comment
+    public void saveGame(String filename) {
+                ^
+Generating doc\src\picross\Server.html...
+.\src\picross\Server.java:45: warning: no @param for _view
+	public Server(ViewInterface _view, int portNumber) {
+	       ^
+.\src\picross\Server.java:45: warning: no @param for portNumber
+	public Server(ViewInterface _view, int portNumber) {
+	       ^
+.\src\picross\Server.java:58: warning: no comment
+	public void writeln(String string) {
+	            ^
+Generating doc\src\picross\ServerView.html...
+.\src\picross\ServerView.java:44: warning: no comment
+public class ServerView implements ViewInterface, ActionListener {
+       ^
+.\src\picross\ServerView.java:86: warning: no comment
+	public void createAndShowGUI() throws IOException {
+	            ^
+.\src\picross\ServerView.java:154: warning: no comment
+	public static void main(String[] args) throws IOException {
+	                   ^
+.\src\picross\ViewInterface.java:4: warning: no comment
+	void println(String text);
+	     ^
+.\src\picross\ViewInterface.java:6: warning: no comment
+	void setServer(Server _server);
+	     ^
+Generating doc\src\picross\View.html...
+.\src\picross\View.java:447: warning: no description for @param
      * @param text
        ^
-.\src\picross\View.java:459: warning: no description for @param
+.\src\picross\View.java:504: warning: no description for @param
      * @param i
        ^
-.\src\picross\View.java:460: warning: no description for @param
+.\src\picross\View.java:505: warning: no description for @param
      * @param j
        ^
+.\src\picross\View.java:39: warning: no comment
+public class View extends JFrame {
+       ^
+.\src\picross\View.java:583: warning: no comment
+    public void changeColor(int x, int y, Color c) {
+                ^
+.\src\picross\View.java:587: warning: no comment
+    public void changeLabelText(boolean[][] board, int x, int y) {
+                ^
+.\src\picross\View.java:696: warning: no comment
+    public void createClientScreen() {
+                ^
+.\src\picross\View.java:454: warning: no comment
+    public void createLogText(String text) {
+                ^
+.\src\picross\View.java:439: warning: no comment
+    public void createLogTextNNL(String text) {
+                ^
+.\src\picross\View.java:692: warning: no comment
+    public int getLangBoxIndex() {
+               ^
+.\src\picross\View.java:579: warning: no comment
+    public boolean isButton(ActionEvent e, int x, int y) {
+                   ^
+.\src\picross\View.java:700: warning: no comment
+    public void startClient() {
+                ^
+.\src\picross\View.java:643: warning: no comment
+    public void updateInterface(int langIndex) {
+                ^
+Generating doc\src\picross\ViewInterface.html...
+.\src\picross\ViewInterface.java:3: warning: no comment
+public interface ViewInterface {
+       ^
+Generating doc\src\picross\ViewScene.html...
+.\src\picross\ViewScene.java:16: warning: no comment
+public class ViewScene {
+       ^
+.\src\picross\ViewScene.java:32: warning: no comment
+	public ViewScene() {
+	       ^
+.\src\picross\ViewScene.java:44: warning: no comment
+	public void createAndShowGUI() {
+	            ^
+.\src\picross\ViewScene.java:65: warning: no comment
+	public Component getScene() {
+	                 ^
+.\src\picross\ViewScene.java:60: warning: no comment
+	public Component getScene1() {
+	                 ^
+.\src\picross\ViewScene.java:48: warning: no comment
+	public JButton getSendButton() {
+	               ^
+.\src\picross\ViewScene.java:52: warning: no comment
+	public JTextArea getTextArea() {
+	                 ^
+.\src\picross\ViewScene.java:56: warning: no comment
+	public JTextArea getUserText() {
+	                 ^
+Generating doc\src\picross\package-summary.html...
+Generating doc\src\picross\package-tree.html...
+Generating doc\serialized-form.html...
+.\src\picross\View.java:131: warning: no comment
+    private ImageIcon abtFileImg;
+                      ^
+.\src\picross\View.java:53: warning: no comment
+    private JTextArea Area1 = new JTextArea(30, 10);
+                      ^
+.\src\picross\View.java:54: warning: no comment
+    private JButton[][] areaButtons = new JButton[5][5];
+                        ^
+.\src\picross\View.java:60: warning: no comment
+    private JLabel AreaL[];
+                   ^
+.\src\picross\View.java:61: warning: no comment
+    private JLabel AreaT[];
+                   ^
+.\src\picross\View.java:46: warning: no comment
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+                                         ^
+.\src\picross\View.java:46: warning: no comment
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+                                                 ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                 ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                          ^
+.\src\picross\View.java:77: warning: no comment
+    private JMenu Client;
+                  ^
+.\src\picross\View.java:82: warning: no comment
+    private JMenuItem ClientConfig;
+                      ^
+.\src\picross\View.java:42: warning: no comment
+    private ClientView clientView;
+                       ^
+.\src\picross\View.java:133: warning: no comment
+    private ImageIcon clrFileImg;
+                      ^
+.\src\picross\View.java:140: warning: no comment
+    private JMenuItem Colors;
+                      ^
+.\src\picross\View.java:69: warning: no comment
+    private JButton connectButton, endButton, newNetGameButton, sendNetGameButton, recieveNetGameButton, sendDataButton,
+                    ^
+.\src\picross\View.java:64: warning: no comment
+    private Color correctMarked = new Color(255, 255, 0);
+                  ^
+.\src\picross\View.java:63: warning: no comment
+    private Color correctSelected = new Color(0x7CCD7C);
+                  ^
+.\src\picross\View.java:50: warning: no comment
+    private Locale currentLocale;
+                   ^
+.\src\picross\View.java:69: warning: no comment
+    private JButton connectButton, endButton, newNetGameButton, sendNetGameButton, recieveNetGameButton, sendDataButton,
+                                   ^
+.\src\picross\View.java:73: warning: no comment
+    private JMenu Game;
+                  ^
+.\src\picross\View.java:40: warning: no comment
+    private Controller gameController;
+                       ^
+.\src\picross\View.java:41: warning: no comment
+    private Model gameModel;
+                  ^
+.\src\picross\View.java:75: warning: no comment
+    private JMenu Help;
+                  ^
+.\src\picross\View.java:67: warning: no comment
+    private String hostname = "localhost";
+                   ^
+.\src\picross\View.java:65: warning: no comment
+    private Color incorrectColor = new Color(255, 0, 0);
+                  ^
+.\src\picross\View.java:48: warning: no comment
+    private String LANG1, LANG2, LANG3;
+                   ^
+.\src\picross\View.java:48: warning: no comment
+    private String LANG1, LANG2, LANG3;
+                          ^
+.\src\picross\View.java:48: warning: no comment
+    private String LANG1, LANG2, LANG3;
+                                 ^
+.\src\picross\View.java:44: warning: no comment
+    private int langIndex = 0;
+                ^
+.\src\picross\View.java:62: warning: no comment
+    private JComboBox<Object> LanguageBox;
+                              ^
+.\src\picross\View.java:49: warning: no comment
+    private String[] Languages = { LANG1, LANG2, LANG3 };
+                     ^
+.\src\picross\View.java:118: warning: no comment
+    private ImageIcon ldFileImg;
+                      ^
+.\src\picross\View.java:709: warning: no comment
+    WindowListener listener = new WindowAdapter() {
+                   ^
+.\src\picross\View.java:79: warning: no comment
+    private JMenuItem loadGame;
+                      ^
+.\src\picross\View.java:55: warning: no comment
+    private JCheckBox markButton = new JCheckBox();
+                      ^
+.\src\picross\View.java:46: warning: no comment
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+                      ^
+.\src\picross\View.java:46: warning: no comment
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+                               ^
+.\src\picross\View.java:46: warning: no comment
+            MENUCLRS, MENUABT, MENUCFGC, BTMARK, BTRST, TXTTM, TXTPTS;
+            ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                                                          ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                                  ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                          ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                                          ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                                                  ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                            ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                      ^
+.\src\picross\View.java:45: warning: no comment
+    private String TITLE, BUTOK, BUTCANCEL, MENUTAB1, MENUTAB2, MENUTAB3, MENUNW, MENULG, MENUSG, MENUSL, MENUEX,
+                                                                ^
+.\src\picross\View.java:43: warning: no comment
+    private String myLang;
+                   ^
+.\src\picross\View.java:69: warning: no comment
+    private JButton connectButton, endButton, newNetGameButton, sendNetGameButton, recieveNetGameButton, sendDataButton,
+                                              ^
+.\src\picross\View.java:70: warning: no comment
+            playButton;
+            ^
+.\src\picross\View.java:59: warning: no comment
+    private JTextField TimerBox, PointsBox;
+                                 ^
+.\src\picross\View.java:66: warning: no comment
+    private int portnum = 4321;
+                ^
+.\src\picross\View.java:71: warning: no comment
+    private JTextArea usertext, usertextarea, servertext, servertextarea, porttext, porttextarea;
+                                                                          ^
+Generating doc\overview-tree.html...
+Building index for all classes...
+Generating doc\allclasses-index.html...
+Generating doc\allpackages-index.html...
+Generating doc\index-all.html...
+Generating doc\index.html...
+Generating doc\help-doc.html...
+1 error
+100 warnings

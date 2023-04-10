@@ -82,9 +82,10 @@ public class Client {
 			 */
 			// consoleData = strcliid + "#" + consoleData;
 			dat.println(messageData);
+			serverData = dis.readLine();
+			System.out.println(serverData);
 			dat.println("");
 			dat.flush();
-			sock.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}

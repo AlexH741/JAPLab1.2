@@ -1,4 +1,5 @@
-.\src\picross\View.java:37: warning: [serial] serializable class View has no definition of serialVersionUID
-public class View extends JFrame{
+Picked up _JAVA_OPTIONS: -Xmx256M
+.\src\picross\View.java:39: warning: [serial] serializable class View has no definition of serialVersionUID
+public class View extends JFrame {
        ^
 1 warning
