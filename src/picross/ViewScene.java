@@ -6,6 +6,12 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Component;
 
 public class ViewScene {
 	private JFrame mainFrame;
@@ -49,6 +55,11 @@ public class ViewScene {
 
 	public JTextArea getUserText() {
 		return userText;
+	}
+
+	public Component getScene1() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public Component getScene() {
